@@ -1,0 +1,1 @@
+<p>BIENVENUE DANS l'ACCUEIL</p>
