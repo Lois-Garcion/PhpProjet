@@ -90,8 +90,8 @@ class Produit{
             $values = array("id" => $id);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Produit');
-            $produit =$req_prep->fetchAll();
-            if(empty($produit))return false;
+            $produit =$req_prep->fetch();
+            if($produit == null)return false;
             return $produit;
         }
         catch (PDOException $e){
@@ -123,15 +123,17 @@ class Produit{
         }
         else {
             if($order == null){
-                $sql = "SELECT * FROM p_produit ORDER BY $attribute";
+                $sql = "SELECT * FROM p_produit ORDER BY :attribute";
             }
             else {
-                $sql = "SELECT * FROM p_produit ORDER BY $attribute $order";
+                $sql = "SELECT * FROM p_produit ORDER BY :attribute :order";
             }
         }
         try{
             $req_prep = Model::getPDO()->prepare($sql);
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Produit');
+            $values = array("attribute" => $attribute, "order"=>$order);
+            $req_prep->execute($values);
             $tab_produit =$req_prep->fetchAll();
             if(empty($tab_produit))return false;
             return $tab_produit;
@@ -164,7 +166,7 @@ class Produit{
         }
     }
 
-    public static function getAllByMinMaxPrice($categorie,$minPrix,$maxPrix){
+    public static function getAllByMinMaxPrice($minPrix,$maxPrix){
         if($minPrix == null & $maxPrix == null){
             $tab_produit = getAll();
             return $tab_produit;
