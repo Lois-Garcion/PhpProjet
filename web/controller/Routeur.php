@@ -2,7 +2,7 @@
 
 if(sizeof($_GET) == 0 ){
     $controller = null;
-    $view = "accueil";
+    $view = "Accueil";
     $pagetitle= "boutique de la calle accueil";
     require(File::build_path(array("view","view.php")));
 }

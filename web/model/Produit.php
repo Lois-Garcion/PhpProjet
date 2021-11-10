@@ -123,15 +123,17 @@ class Produit{
         }
         else {
             if($order == null){
-                $sql = "SELECT * FROM p_produit ORDER BY $attribute";
+                $sql = "SELECT * FROM p_produit ORDER BY :attribute";
             }
             else {
-                $sql = "SELECT * FROM p_produit ORDER BY $attribute $order";
+                $sql = "SELECT * FROM p_produit ORDER BY :attribute :order";
             }
         }
         try{
             $req_prep = Model::getPDO()->prepare($sql);
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Produit');
+            $values = array("attribute" => $attribute, "order"=>$order);
+            $req_prep->execute($values);
             $tab_produit =$req_prep->fetchAll();
             if(empty($tab_produit))return false;
             return $tab_produit;
