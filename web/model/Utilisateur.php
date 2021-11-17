@@ -9,6 +9,7 @@ class Utilisateur
     private $prenom = null;
     private $telephone= null;
     private $idAdressePrincipale= null;
+    private $admin = null;
 
     /**
      * @param $adresseMail
@@ -27,12 +28,30 @@ class Utilisateur
             $this->prenom = $prenom;
             $this->telephone = $telephone;
             $this->idAdressePrincipale = $idAdressePrincipale;
+            $this->admin = 0;
         }
         elseif(!is_null($adresseMail) && !is_null($mdp)) {
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
         }
     }
+
+    /**
+     * @return int|null
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param int|null $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+    }
+
 
 
     /**

@@ -25,6 +25,7 @@ class ControllerUtilisateur
             $_SESSION["prenom"] = $user->getPrenom();
             $_SESSION["telephone"] =$user->getTelephone();
             $_SESSION["idAdresse"] =$user->getIdAdressePrincipale();
+            $_SESSION["admin"] = $user->getAdmin();
             header("location: ./");
         }
         else{
@@ -71,5 +72,15 @@ class ControllerUtilisateur
             ControllerUtilisateur::connect();
         }
     }
+
+    public static function accueilAdmin(){
+        if($_SESSION["admin"]=1){
+            $controller = "Utilisateur";
+            $view = "AccueilAdmin";
+            require_once(File::build_path(array("view","view.php")));
+        }
+    }
+
+    //TODO ajouter une fonction pour ajouter des gens en admin
 
 }

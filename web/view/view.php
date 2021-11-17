@@ -21,11 +21,15 @@
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
               }
               else{
+                  if($_SESSION["admin"]==1){
+                      echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
+                  }
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
               }
               ?>
 
             <li><a href="https://youtu.be/dQw4w9WgXcQ">Les produits</a></li>
+
           </ul>
         </div>
 
