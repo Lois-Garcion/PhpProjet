@@ -1,5 +1,6 @@
 <?php
 require_once (File::build_path(array("model","Model.php")));
+require_once (File::build_path(array("model","CustomError.php")));
 class Ligne_Commande_Produit
 {
     private $idCommande;
@@ -77,7 +78,7 @@ class Ligne_Commande_Produit
             return $tab_ligneCP;
         }
         catch (PDOException $e){
-            require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 

@@ -1,5 +1,6 @@
 <?php
 require_once (File::build_path(array("model","Model.php")));
+require_once (File::build_path(array("model","CustomError.php")));
 class Produit{
 
     private $idProduit;
@@ -96,6 +97,7 @@ class Produit{
         }
         catch (PDOException $e){
             require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -112,6 +114,7 @@ class Produit{
         }
         catch (PDOException $e){
             require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -140,6 +143,7 @@ class Produit{
         }
         catch (PDOException $e){
             require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -163,6 +167,7 @@ class Produit{
         }
         catch (PDOException $e){
             require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -185,6 +190,7 @@ class Produit{
         }
         catch (PDOException $e){
             require_once(File::build_path(array("model","CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 

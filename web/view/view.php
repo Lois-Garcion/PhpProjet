@@ -17,10 +17,14 @@
         <div class="menu">
           <ul>
             <li><a href="./">Accueil</a></li>
-              <?php if(!isset($_SESSION["status"]) && $_SESSION["status"] !== "connected"){ //TODO REGLER LE PROBLEME
-                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
+              <?php if(!isset($_SESSION["status"])){ //TODO REGLER LE PROBLEME
+                      echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
+              }
+              else{
+                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
               }
               ?>
+
             <li><a href="https://youtu.be/dQw4w9WgXcQ">Les produits</a></li>
           </ul>
         </div>

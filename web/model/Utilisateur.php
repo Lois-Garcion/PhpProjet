@@ -1,13 +1,14 @@
 <?php
 require_once (File::build_path(array("model","Model.php")));
+require_once (File::build_path(array("model","CustomError.php")));
 class Utilisateur
 {
     private $adresseMail;
     private $mdp;
-    private $nom;
-    private $prenom;
-    private $telephone;
-    private $idAdressePrincipale;
+    private $nom = null;
+    private $prenom = null;
+    private $telephone= null;
+    private $idAdressePrincipale= null;
 
     /**
      * @param $adresseMail
@@ -26,6 +27,10 @@ class Utilisateur
             $this->prenom = $prenom;
             $this->telephone = $telephone;
             $this->idAdressePrincipale = $idAdressePrincipale;
+        }
+        elseif(!is_null($adresseMail) && !is_null($mdp)) {
+            $this->adresseMail = $adresseMail;
+            $this->mdp = $mdp;
         }
     }
 
@@ -126,6 +131,20 @@ class Utilisateur
         $this->idAdressePrincipale = $idAdressePrincipale;
     }
 
+    public function save(){
+        $sql = "INSERT INTO p_utilisateur (adresseMail,mdp) VALUES(:mail,:mdp)";
+        try {
+            $req_prep = Model::getPDO()->prepare($sql);
+            $values = array("mail" => $this->getAdresseMail(), "mdp" => $this->getMdp());
+            $req_prep->execute($values);
+            return true;
+        }
+        catch (PDOException $e){
+            CustomError::callError($e);
+        }
+
+    }
+
 
     #############################################
     //FONCTION STATIC
@@ -148,8 +167,27 @@ class Utilisateur
         catch (PDOException $e){
             CustomError::callError($e);
         }
-
     }
+
+    public static function getUserByLogin($mail){
+        $sql = "SELECT * FROM p_utilisateur WHERE adresseMail = :mail";
+        try{
+            $req_prep = Model::getPDO()->prepare($sql);
+            $values = array("mail" => $mail);
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Utilisateur');
+            $user =$req_prep->fetch();
+            if($user===null){
+                return false;
+            }
+            return $user;
+        }
+        catch (PDOException $e){
+            CustomError::callError($e);
+        }
+    }
+
+
 
 
 }

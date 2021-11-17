@@ -2,10 +2,11 @@
     <hr />
         <form action="?controller=ControllerUtilisateur&action=connect" method="post">
                 <label>login</label>
-                <input type="text" name="login">
+                <input type="text" name="login" placeholder="Entrez votre mail">
                 <label>Mot de passe</label>
-                <input type="password" name="password">
+                <input type="password" name="password" placeholder="Entrez votre mot de passe">
                 <input type="submit" class="button" value="Login">
         </form>
-    </div>
-</div>
+ <p>Vous n'avez pas de compte?</p>
+
+    <a href="?controller=ControllerUtilisateur&action=inscription" style="color:black">S'inscrire</a>

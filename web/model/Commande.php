@@ -1,5 +1,6 @@
 <?php
 require_once (File::build_path(array("model","Model.php")));
+require_once (File::build_path(array("model","CustomError.php")));
 class Commande
 {
 
@@ -23,7 +24,7 @@ class Commande
             if ($commande == null) return false;
             return $commande;
         } catch (PDOException $e) {
-            require_once(File::build_path(array("model", "CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -39,7 +40,7 @@ class Commande
             }
             return $tab_commande;
         } catch (PDOException $e) {
-            require_once(File::build_path(array("model", "CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 
@@ -66,7 +67,7 @@ class Commande
             if (empty($tab_produit)) return false;
             return $tab_produit;
         } catch (PDOException $e) {
-            require_once(File::build_path(array("model", "CustomeError.php")));
+            CustomError::callError($e);
         }
     }
 }
