@@ -56,11 +56,11 @@ class ControllerUtilisateur
         $confirmPassword = $_POST["validationPassword"];
 
         if($password !== $confirmPassword){
-            CustomError::callError("Les mots de passe ne sont pas les mêmes");
+            ControllerUtilisateur::inscription(); //TODO ajouter un message d'erreur au dessus du form d'inscription
         }
 
         else if(Utilisateur::getUserByLogin($mail)){
-            CustomError::callError("Un compte est déjà associé à cette adresse mail");
+            ControllerUtilisateur::inscription(); //TODO ajouter un message d'erreur au dessus du form d'inscription
         }
 
         else {
