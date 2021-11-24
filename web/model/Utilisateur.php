@@ -8,7 +8,6 @@ class Utilisateur
     private $nom = null;
     private $prenom = null;
     private $telephone= null;
-    private $idAdressePrincipale= null;
     private $admin = null;
 
     /**
@@ -19,15 +18,14 @@ class Utilisateur
      * @param $telephone
      * @param $idAdressePrincipale
      */
-    public function __construct($adresseMail = null, $mdp=null, $nom=null, $prenom=null, $telephone=null, $idAdressePrincipale=null)
+    public function __construct($adresseMail = null, $mdp=null, $nom=null, $prenom=null, $telephone=null)
     {
-        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone) && !is_null($idAdressePrincipale)) {
+        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone)) {
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->telephone = $telephone;
-            $this->idAdressePrincipale = $idAdressePrincipale;
             $this->admin = 0;
         }
         elseif(!is_null($adresseMail) && !is_null($mdp)) {
@@ -134,32 +132,38 @@ class Utilisateur
         $this->telephone = $telephone;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdAdressePrincipale()
-    {
-        return $this->idAdressePrincipale;
-    }
 
-    /**
-     * @param mixed $idAdressePrincipale
-     */
-    public function setIdAdressePrincipale($idAdressePrincipale)
-    {
-        $this->idAdressePrincipale = $idAdressePrincipale;
-    }
 
     public function save(){
-        $sql = "INSERT INTO p_utilisateur (adresseMail,mdp) VALUES(:mail,:mdp)";
-        try {
-            $req_prep = Model::getPDO()->prepare($sql);
-            $values = array("mail" => $this->getAdresseMail(), "mdp" => $this->getMdp());
-            $req_prep->execute($values);
-            return true;
+        if(!self::getUserByLogin($this->adresseMail)){
+            $sql = "INSERT INTO p_utilisateur (adresseMail,mdp) VALUES(:mail,:mdp)";
+            try {
+                $req_prep = Model::getPDO()->prepare($sql);
+                $values = array("mail" => $this->getAdresseMail(), "mdp" => $this->getMdp());
+                $req_prep->execute($values);
+                return true;
+            } catch (PDOException $e) {
+                CustomError::callError($e);
+            }
         }
-        catch (PDOException $e){
-            CustomError::callError($e);
+        else {
+            $sql = "UPDATE p_utilisateur SET mdp = :mdp, nom = :nom, prenom = :prenom, telephone = :telephone, admin = :admin WHERE adresseMail = :adresseMail";
+            try {
+                $req_prep = Model::getPDO()->prepare($sql);
+                $values = array(
+                    "mdp" => $this->mdp,
+                    "nom" => $this->nom,
+                    "prenom" => $this->prenom,
+                    "telephone" => $this->telephone,
+                    "admin" => $this->admin,
+                    "adresseMail"=> $this->adresseMail);
+                $req_prep->execute($values);
+                return true;
+            } catch (PDOException $e) {
+                require_once('./model/CustomError.php');
+                CustomError::callError($e->getMessage());
+                return false;
+            }
         }
 
     }
