@@ -79,8 +79,29 @@ class ControllerUtilisateur
             $view = "AccueilAdmin";
             require_once(File::build_path(array("view","view.php")));
         }
+        else{
+            CustomError::callError("Cette page est reservé aux administrateurs");
+        }
     }
 
-    //TODO ajouter une fonction pour ajouter des gens en admin
+    public static function upgradeAdmin(){
+        if($_SESSION["admin"]=1) {
+            $user = Utilisateur::getUserByLogin($_POST["mail"]);
+            $user->setAdmin(1);
+            $user->save();
+            self::accueilAdmin();
+        }
+        else{
+            CustomError::callError("Cette fonction est reservé aux administrateurs");
+        }
+    }
 
+    public static function pageUtilisateur(){
+        if(isset($_SESSION["status"])){
+            $controller = "Utilisateur";
+            $view = "PageUtilisateur";
+            $pagetitle = "Utilisateur de la calle";
+            require_once(File::build_path(array("view","view.php")));
+        }
+    }
 }
