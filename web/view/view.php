@@ -17,7 +17,7 @@
         <div class="menu">
           <ul>
             <li><a href="./">Accueil</a></li>
-              <?php if(!isset($_SESSION["status"])){ //TODO REGLER LE PROBLEME
+              <?php if(!isset($_SESSION["status"])){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
               }
               else{
