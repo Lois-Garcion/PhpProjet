@@ -58,7 +58,17 @@ class ControllerProduit
         require_once(File::build_path(array("view","view.php")));
     }
 
+    public static function created(){
+        require_once(File::build_path(array("model", "Produit.php")));
+        $produit = new Produit($_POST["idProduit"], $_POST["prix"], $_POST["categorie"], $_POST["nomProduit"]);
+        $produit->save();
+        header("location: ./?controller=ControllerProduit&action=readAll");
+    }
 
-
-
+    public static function formProduit(){
+        $controller= "Produit";
+        $view = "formProduit";
+        $pagetitle = "Formulaire";
+        require_once(File::build_path(array("view","view.php")));
+    }
 }

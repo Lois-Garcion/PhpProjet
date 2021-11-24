@@ -194,10 +194,35 @@ class Produit{
         }
     }
 
-
-
-
-
-
-
+    public function save(){
+        if(!self::getById($this->getIdProduit())) {
+            $insert = "INSERT INTO p_produit(idProduit, prix, categorie, nomProduit) VALUES (:idProduit, :prix, :categorie, :nomProduit)";
+            try {
+                $req_prep = Model::getPDO()->prepare($insert);
+                $values = array("idProduit" => $this->getIdProduit(), "prix" => $this->getPrix(), "categorie" => $this->getCategorie(), "nomProduit" => $this->getNomProduit());
+                $req_prep->execute($values);
+                return true;
+            } catch (PDOException $e) {
+                CustomError::callError($e);
+                return false;
+            }
+        }
+            else {
+                $update = "UPDATE p_produit SET prix = :prix, categorie = :categorie, nomProduit = :nomProduit WHERE idProduit = :idProduit";
+                try {
+                    $req_prep = Model::getPDO()->prepare($update);
+                    $values = array(
+                        "prix" => $this->getPrix(),
+                        "categorie" => $this->getCategorie(),
+                        "nomProduit" => $this->getNomProduit(),
+                        "idProduit" => $this->getIdProduit()
+                        );
+                    $req_prep->execute($values);
+                    return true;
+                } catch (PDOException $e) {
+                    CustomError::callError($e);
+                    return false;
+                }
+            }
+        }
 }
