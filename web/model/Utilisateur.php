@@ -34,6 +34,7 @@ class Utilisateur
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
             $this->nonce = $nonce;
+            $this->admin=0;
         }
     }
 

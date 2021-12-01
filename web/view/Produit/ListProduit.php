@@ -17,7 +17,23 @@
                     <h5>" . $v->getNomProduit() . "</h5>
                     <h6>" . $v->getPrix() ."€". "<h6>
                 </div>
-            </div>";
+            </div>
+            <div class = \"formulaire\">
+                <div class = \"container\">
+                    <form method=\"post\" action=\"?controller=ControllerUtilisateur&action=ajoutPanier\">
+                        <input type = \"hidden\" name = \"idProduit\" value=\" ". $v->getIdProduit() . " \" required>
+                        <div class=\"input-group\">
+                        <label>Quantité</label>
+                        <input type = \"number\" name=\"quantite\" placeholder=\"Quantité\" required>
+                        </div>                     
+                        <div class=\"input-group\">
+                        <button type=\"submit\" name=\"submit\" class=\"submit-btn\">Ajouter</button>
+                        </div>    
+                        </form>                    
+                    </div>
+                
+                ";
+
     }
     ?>
 </section>

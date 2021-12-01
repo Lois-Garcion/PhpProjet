@@ -1,6 +1,7 @@
 <?php
 require_once (File::build_path(array("model","CustomError.php")));
 require_once (File::build_path(array("model","Utilisateur.php")));
+require_once (File::build_path(array("model","Produit.php")));
 class ControllerUtilisateur
 {
 
@@ -189,6 +190,38 @@ class ControllerUtilisateur
           $view = "PageUtilisateur";
           $pagetitle = "Utilisateur de la calle";
           require_once(File::build_path(array("view","view.php")));
+        }
+    }
+
+    public static function ajoutPanier()
+    {
+        if (!isset($_SESSION["status"])) {
+            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        }
+        else {
+            if(!Produit::getById($_POST["idProduit"])){
+                CustomError::callError("Ce produit n'existe pas ou n'est plus en stock");
+            }
+            else {
+                $panier = unserialize($_COOKIE["panier"]);
+                $panier[count($panier)] = array("idProduit" => $_POST["idProduit"], "quantiteProduit" => $_POST["quantite"]);
+                $_COOKIE["panier"] = serialize($panier);
+                require_once(File::build_path(array("controller", "ControllerProduit.php")));
+                ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
+            }
+        }
+    }
+
+    public static function afficherPanier(){
+        if(!isset($_SESSION["status"])){
+            self::formConnect();
+        }
+        else{
+            $panier = unserialize($_COOKIE["panier"]);
+            $controller = "Utilisateur";
+            $view = "Panier";
+            $pagetitle = "Panier";
+            require_once(File::build_path(array("view","view.php")));
         }
     }
 }

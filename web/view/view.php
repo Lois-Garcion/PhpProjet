@@ -28,12 +28,13 @@
                   }
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
-
               }
-
+              if(!empty(unserialize($_COOKIE["panier"]))){
+                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
+              }
               ?>
 
-            <li><a href="https://youtu.be/dQw4w9WgXcQ">Les produits</a></li>
+            <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
 
           </ul>
         </div>
