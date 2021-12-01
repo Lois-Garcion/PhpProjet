@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="assets/css/header.css" type="text/css">
         <link rel="stylesheet" href="assets/css/footer.css" type="text/css">
         <link rel="stylesheet" href="assets/css/produits.css" type="text/css">
+        <link rel="stylesheet" href="assets/css/profil.css" type="text/css">
+        <link rel="stylesheet" href="assets/css/popupform.css" type="text/css">
     </head>
     <body>
 
@@ -24,8 +26,11 @@
                   if($_SESSION["admin"]==1){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
                   }
+                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
+
               }
+
               ?>
 
             <li><a href="https://youtu.be/dQw4w9WgXcQ">Les produits</a></li>

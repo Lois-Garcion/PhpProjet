@@ -25,14 +25,14 @@ class ControllerUtilisateur
         if (isset($_POST["mail"])) {
             $login = $_POST["mail"];
         } else {
-            $login = $_SESSION["mailConnection"];
+            $login = $_SESSION["mail"];
         }
         if (isset($_POST["password"])) {
             $password = Security::hacher($_POST["password"]);
         }
         else{
             $password = Security::hacher($_SESSION["password"]);
-            unset($_SESSION["passwordConnection"]);
+            unset($_SESSION["password"]);
         }
 
         $user = Utilisateur::getUserByLoginAndPassword($login, $password);
@@ -46,8 +46,8 @@ class ControllerUtilisateur
                 $_SESSION["admin"] = $user->getAdmin();
                 header("location: ./");
             } else {
-                $_SESSION["mailConnection"] = $_POST["mail"];
-                $_SESSION["passwordConnection"] = $_POST["password"];
+                $_SESSION["mail"] = $_POST["mail"];
+                $_SESSION["password"] = $_POST["password"];
                 self::formValidateNonce();
             }
         }
@@ -101,7 +101,7 @@ class ControllerUtilisateur
                 $nonce = Security::generateRandomHex();
                 $v = new Utilisateur($mail, Security::hacher($password),$nonce);
                 $v->save();
-                $mail = "Le code pour vous connecter est le suivant : ".$nonce."\n"; //TODO ajouter un lien vers la page de connexion et comprendre pourquoi ca envoie pas le mail (ou alors je suis blacklisté)
+                $mail = "Le code pour vous connecter est le suivant : ".$nonce."\n"; //TODO ajouter un lien vers la page de connexion
                 mail($v->getAdresseMail(),"Boutique de la calle, validez votre inscription",$mail);
                 ControllerUtilisateur::formConnect();
 
@@ -141,6 +141,54 @@ class ControllerUtilisateur
             $view = "PageUtilisateur";
             $pagetitle = "Utilisateur de la calle";
             require_once(File::build_path(array("view","view.php")));
+        }
+    }
+
+    public static function updateNames(){
+        if (!isset($_SESSION["status"])) {
+          $controller= "Utilisateur";
+          $view = "Connexion";
+          $pagetitle = "Connexion";
+          require_once(File::build_path(array("view","view.php")));
+        }
+        else {
+          $user = Utilisateur::getUserByLogin($_SESSION["mail"]);
+
+          $user->setPrenom($_POST["prenom"]);
+          $user->setNom($_POST["nom"]);
+
+          $user->save();
+
+          $_SESSION["prenom"] = $_POST["prenom"];
+          $_SESSION["nom"] = $_POST["nom"];
+
+          $controller = "Utilisateur";
+          $view = "PageUtilisateur";
+          $pagetitle = "Utilisateur de la calle";
+          require_once(File::build_path(array("view","view.php")));
+        }
+    }
+
+    public static function updatePhone(){
+        if (!isset($_SESSION["status"])) {
+          $controller= "Utilisateur";
+          $view = "Connexion";
+          $pagetitle = "Connexion";
+          require_once(File::build_path(array("view","view.php")));
+        }
+        else {
+          $user = Utilisateur::getUserByLogin($_SESSION["mail"]);
+
+          $user->setTelephone($_POST["telephone"]);
+
+          $user->save();
+
+          $_SESSION["telephone"] = $_POST["telephone"];
+
+          $controller = "Utilisateur";
+          $view = "PageUtilisateur";
+          $pagetitle = "Utilisateur de la calle";
+          require_once(File::build_path(array("view","view.php")));
         }
     }
 }

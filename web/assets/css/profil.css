@@ -1,0 +1,21 @@
+.box {
+    height: 175px;
+
+    margin: 10px 10% 10px 10%;
+
+    border: 2px solid rgba(0,0,0,0);
+}
+
+.box:hover {
+    border: 2px solid rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.1);
+    box-shadow: 8px 10px 10px rgba(0,0,0,0.4);
+}
+
+.box:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.line{
+    display: inline;
+}

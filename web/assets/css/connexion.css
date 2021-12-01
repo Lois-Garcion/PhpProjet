@@ -1,0 +1,25 @@
+.connexion{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.connexion input{
+    height: 20px;
+    border-radius: 3px;
+    border: 3px solid black;
+}
+
+.connexion .button{
+    height: 50px;
+    border-radius: 3px;
+    transition: 0.4s;
+    color: #002a38;
+    cursor: pointer;
+    border:1px solid transparent;
+    font-size: 16px;
+}
+
+.connexion button:hover{
+    background-color: transparent;
+    border-color: #002a38;
+}
