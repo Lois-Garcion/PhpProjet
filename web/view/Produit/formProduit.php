@@ -21,6 +21,10 @@
                 <input type = "text" name="categorie" placeholder="Entrez la catégorie du produit" required>
             </div>
             <div class="input-group">
+                <label>Image</label>
+                <input type = "file" name="file" required>
+            </div>
+            <div class="input-group">
                 <button type="submit" name="submit" class="submit-btn">Ajouter</button>
             </div>
         </form>
