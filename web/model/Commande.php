@@ -11,6 +11,36 @@ class Commande
     private $idAdresse;
     private $fini;
 
+
+    /**
+     * @param $idCommande
+     * @param $montant
+     * @param $date
+     * @param $adresseMailUtilisateur
+     * @param $idAdresse
+     * @param $fini
+     */
+    public function __construct($idCommande = null, $montant= null, $date= null, $adresseMailUtilisateur= null, $idAdresse= null, $fini= null)
+    {
+        if(!is_null($idCommande) && !is_null($montant) &&!is_null($date) &&!is_null($idAdresse)&&!is_null($adresseMailUtilisateur)&&!is_null($fini) ) {
+            $this->idCommande = $idCommande;
+            $this->montant = $montant;
+            $this->date = $date;
+            $this->adresseMailUtilisateur = $adresseMailUtilisateur;
+            $this->idAdresse = $idAdresse;
+            $this->fini = $fini;
+        }
+        if(!is_null($idCommande)&&!is_null($adresseMailUtilisateur)&&!is_null($fini) ) {
+            $this->idCommande = $idCommande;
+            $this->montant = null;
+            $this->date = null;
+            $this->adresseMailUtilisateur = $adresseMailUtilisateur;
+            $this->idAdresse = null;
+            $this->fini = $fini;
+        }
+    }
+
+
     public static function getById($id)
     {
         $sql = "SELECT * FROM p_commande WHERE idCommande = :id";
@@ -69,6 +99,25 @@ class Commande
         } catch (PDOException $e) {
             CustomError::callError($e);
         }
+    }
+
+    public static function getActiveCommandByUser($mail){
+        $sql = "SELECT idCommande FROM p_commande WHERE adresseMailUtilisateur = :mail AND fini = 0;";
+        try {
+            $req_prep = Model::getPDO()->query($sql);
+            $req_prep->setFetchMode(PDO::FETCH_OBJ);
+            $idCommand = $req_prep->fetchAll();
+            if (empty($idCommand)) {
+                return false;
+            }
+            return $idCommand;
+        } catch (PDOException $e) {
+            CustomError::callError($e);
+        }
+    }
+
+    public static function save(){
+
     }
 }
 

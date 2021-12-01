@@ -1,14 +1,16 @@
 <?php
 require_once (File::build_path(array("model","Model.php")));
 require_once (File::build_path(array("model","CustomError.php")));
+require_once (FIle::build_path(array("model","Commande.php")));
 class Ligne_Commande_Produit
 {
     private $idCommande;
     private $idProduit;
     private $quantite;
 
-    public function __construct($idProduit=null,$idCommande=null, $quantite = null) {
-        if(!is_null($idCommande) && !is_null($idProduit) &&!is_null($quantite)) {
+    public function __construct($idProduit = null, $idCommande = null, $quantite = null)
+    {
+        if (!is_null($idCommande) && !is_null($idProduit) && !is_null($quantite)) {
             $this->idProduit = Produit::getById($idProduit);
             $this->idCommande = $idCommande;
             $this->quantite = $quantite;
@@ -64,27 +66,24 @@ class Ligne_Commande_Produit
     }
 
 
-    public static function getAllByIdCommande($idCommande){
-        $sql ="SELECT * FROM p_ligne_commande_produit WHERE idCommande = :id";
+    public static function getAllByIdCommande($idCommande)
+    {
+        $sql = "SELECT * FROM p_ligne_commande_produit WHERE idCommande = :id";
 
-        try{
+        try {
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("id" => $idCommande);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Ligne_Commande_Produit');
             $tab_ligneCP = $req_prep->fetchAll();
 
-            if(empty($tab_ligneCP))return false;
+            if (empty($tab_ligneCP)) return false;
             return $tab_ligneCP;
-        }
-        catch (PDOException $e){
+        } catch (PDOException $e) {
             CustomError::callError($e);
         }
     }
 
 
 
-
-
-    //faire une methode getAllByIdCommande
 }

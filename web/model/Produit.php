@@ -83,6 +83,16 @@ class Produit{
     }
 
 
+
+
+
+
+
+
+
+
+    /////////////////////////STATIC
+
     public static function getById($id){
         $sql ="SELECT * FROM p_produit WHERE idProduit = :id";
 

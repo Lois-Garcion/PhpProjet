@@ -5,10 +5,11 @@ class Utilisateur
 {
     private $adresseMail;
     private $mdp;
-    private $nom = null;
-    private $prenom = null;
-    private $telephone= null;
-    private $admin = null;
+    private $nom;
+    private $prenom;
+    private $telephone;
+    private $admin;
+    private $nonce;
 
     /**
      * @param $adresseMail
@@ -18,21 +19,41 @@ class Utilisateur
      * @param $telephone
      * @param $idAdressePrincipale
      */
-    public function __construct($adresseMail = null, $mdp=null, $nom=null, $prenom=null, $telephone=null)
+    public function __construct($adresseMail = null, $mdp=null,$nonce=null, $nom=null, $prenom=null, $telephone=null)
     {
-        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone)) {
+        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone)&& !is_null($nonce)) {
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->telephone = $telephone;
             $this->admin = 0;
+            $this->nonce= $nonce;
         }
-        elseif(!is_null($adresseMail) && !is_null($mdp)) {
+        elseif(!is_null($adresseMail) && !is_null($mdp) && !is_null($nonce)) {
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
+            $this->nonce = $nonce;
         }
     }
+
+    /**
+     * @return mixed|null
+     */
+    public function getNonce()
+    {
+        return $this->nonce;
+    }
+
+    /**
+     * @param mixed|null $nonce
+     */
+    public function setNonce($nonce)
+    {
+        $this->nonce = $nonce;
+    }
+
+
 
     /**
      * @return int|null
@@ -136,10 +157,10 @@ class Utilisateur
 
     public function save(){
         if(!self::getUserByLogin($this->adresseMail)){
-            $sql = "INSERT INTO p_utilisateur (adresseMail,mdp) VALUES(:mail,:mdp)";
+            $sql = "INSERT INTO p_utilisateur (adresseMail,mdp,nonce) VALUES(:mail,:mdp,:nonce)";
             try {
                 $req_prep = Model::getPDO()->prepare($sql);
-                $values = array("mail" => $this->getAdresseMail(), "mdp" => $this->getMdp());
+                $values = array("mail" => $this->getAdresseMail(), "mdp" => $this->getMdp(),"nonce" => $this->getNonce());
                 $req_prep->execute($values);
                 return true;
             } catch (PDOException $e) {
@@ -147,7 +168,7 @@ class Utilisateur
             }
         }
         else {
-            $sql = "UPDATE p_utilisateur SET mdp = :mdp, nom = :nom, prenom = :prenom, telephone = :telephone, admin = :admin WHERE adresseMail = :adresseMail";
+            $sql = "UPDATE p_utilisateur SET mdp = :mdp, nom = :nom, prenom = :prenom, telephone = :telephone, admin = :admin, nonce = :nonce WHERE adresseMail = :adresseMail";
             try {
                 $req_prep = Model::getPDO()->prepare($sql);
                 $values = array(
@@ -156,7 +177,8 @@ class Utilisateur
                     "prenom" => $this->prenom,
                     "telephone" => $this->telephone,
                     "admin" => $this->admin,
-                    "adresseMail"=> $this->adresseMail);
+                    "adresseMail"=> $this->adresseMail,
+                    "nonce"=>$this->nonce);
                 $req_prep->execute($values);
                 return true;
             } catch (PDOException $e) {
