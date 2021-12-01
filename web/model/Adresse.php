@@ -33,6 +33,120 @@ class Adresse
         }
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIdAdresse()
+    {
+        return $this->idAdresse;
+    }
+
+    /**
+     * @param mixed $idAdresse
+     */
+    public function setIdAdresse($idAdresse)
+    {
+        $this->idAdresse = $idAdresse;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCodePostal()
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * @param mixed $codePostal
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->codePostal = $codePostal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * @param mixed $ville
+     */
+    public function setVille($ville)
+    {
+        $this->ville = $ville;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumeroHabitation()
+    {
+        return $this->numeroHabitation;
+    }
+
+    /**
+     * @param mixed $numeroHabitation
+     */
+    public function setNumeroHabitation($numeroHabitation)
+    {
+        $this->numeroHabitation = $numeroHabitation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomRue()
+    {
+        return $this->nomRue;
+    }
+
+    /**
+     * @param mixed $nomRue
+     */
+    public function setNomRue($nomRue)
+    {
+        $this->nomRue = $nomRue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComplement()
+    {
+        return $this->complement;
+    }
+
+    /**
+     * @param mixed $complement
+     */
+    public function setComplement($complement)
+    {
+        $this->complement = $complement;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdresseMailUtilisateur()
+    {
+        return $this->adresseMailUtilisateur;
+    }
+
+    /**
+     * @param mixed $adresseMailUtilisateur
+     */
+    public function setAdresseMailUtilisateur($adresseMailUtilisateur)
+    {
+        $this->adresseMailUtilisateur = $adresseMailUtilisateur;
+    }
+
+
+
     public function save(){
         if(is_null($this->adresseMailUtilisateur)) {
             $sql = "INSERT INTO p_adresse (codePostal,ville,numeroHabitation,nomRue,complement,adresseMailUtilisateur) VALUES(:codePostal,:ville,:numeroHabitation,:nomRue,:complement,:adresseMailUtilisateur)";

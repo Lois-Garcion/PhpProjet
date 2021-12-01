@@ -29,7 +29,7 @@
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
               }
-              if(!empty(unserialize($_COOKIE["panier"]))){
+              if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
               }
               ?>

@@ -10,18 +10,11 @@ class Utilisateur
     private $telephone;
     private $admin;
     private $nonce;
+    private $idAdresse;
 
-    /**
-     * @param $adresseMail
-     * @param $mdp
-     * @param $nom
-     * @param $prenom
-     * @param $telephone
-     * @param $idAdressePrincipale
-     */
-    public function __construct($adresseMail = null, $mdp=null,$nonce=null, $nom=null, $prenom=null, $telephone=null)
+    public function __construct($adresseMail = null, $mdp=null,$nonce=null, $nom=null, $prenom=null, $telephone=null, $idAdresse=null)
     {
-        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone)&& !is_null($nonce)) {
+        if(!is_null($adresseMail) && !is_null($mdp) && !is_null($nom) && !is_null($prenom) && !is_null($telephone)&& !is_null($nonce) && !is_null($idAdresse)) {
             $this->adresseMail = $adresseMail;
             $this->mdp = $mdp;
             $this->nom = $nom;
@@ -29,6 +22,7 @@ class Utilisateur
             $this->telephone = $telephone;
             $this->admin = 0;
             $this->nonce= $nonce;
+            $this->idAdresse = $idAdresse;
         }
         elseif(!is_null($adresseMail) && !is_null($mdp) && !is_null($nonce)) {
             $this->adresseMail = $adresseMail;
@@ -36,7 +30,32 @@ class Utilisateur
             $this->nonce = $nonce;
             $this->admin=0;
         }
+
+        elseif(!is_null($adresseMail) && !is_null($mdp) && !is_null($nonce)) {
+            $this->adresseMail = $adresseMail;
+            $this->mdp = $mdp;
+            $this->nonce = $nonce;
+            $this->admin=0;
+        }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdAdresse()
+    {
+        return $this->idAdresse;
+    }
+
+    /**
+     * @param mixed $idAdresse
+     */
+    public function setIdAdresse($idAdresse)
+    {
+        $this->idAdresse = $idAdresse;
+    }
+
+
 
     /**
      * @return mixed|null
@@ -169,7 +188,7 @@ class Utilisateur
             }
         }
         else {
-            $sql = "UPDATE p_utilisateur SET mdp = :mdp, nom = :nom, prenom = :prenom, telephone = :telephone, admin = :admin, nonce = :nonce WHERE adresseMail = :adresseMail";
+            $sql = "UPDATE p_utilisateur SET mdp = :mdp, nom = :nom, prenom = :prenom, telephone = :telephone, admin = :admin, nonce = :nonce, idAdresse = :idAdresse WHERE adresseMail = :adresseMail";
             try {
                 $req_prep = Model::getPDO()->prepare($sql);
                 $values = array(
@@ -179,7 +198,8 @@ class Utilisateur
                     "telephone" => $this->telephone,
                     "admin" => $this->admin,
                     "adresseMail"=> $this->adresseMail,
-                    "nonce"=>$this->nonce);
+                    "nonce"=>$this->nonce,
+                    "idAdresse"=>$this->idAdresse);
                 $req_prep->execute($values);
                 return true;
             } catch (PDOException $e) {

@@ -45,6 +45,8 @@ class ControllerUtilisateur
                 $_SESSION["prenom"] = $user->getPrenom();
                 $_SESSION["telephone"] = $user->getTelephone();
                 $_SESSION["admin"] = $user->getAdmin();
+                $_SESSION["panier"] = array();
+                $_SESSION["prixPanier"] = 0;
                 header("location: ./");
             } else {
                 $_SESSION["mail"] = $_POST["mail"];
@@ -199,16 +201,28 @@ class ControllerUtilisateur
             self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
         }
         else {
-            if(!Produit::getById($_POST["idProduit"])){
+            $produit = Produit::getById($_POST["idProduit"]);
+            if(!$produit){
                 CustomError::callError("Ce produit n'existe pas ou n'est plus en stock");
             }
             else {
-                $panier = unserialize($_COOKIE["panier"]);
+                $panier = $_SESSION["panier"];
                 $panier[count($panier)] = array("idProduit" => $_POST["idProduit"], "quantiteProduit" => $_POST["quantite"]);
-                $_COOKIE["panier"] = serialize($panier);
+                $_SESSION["panier"] = $panier;
+                $_SESSION["prixPanier"] = $_SESSION["prixPanier"] + $produit->getPrix() * $_POST["quantite"];
                 require_once(File::build_path(array("controller", "ControllerProduit.php")));
                 ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
             }
+        }
+    }
+
+    public static function retirerProduitPanier(){
+        if (!isset($_SESSION["status"])) {
+            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        }
+        else {
+            $panier = $_SESSION["panier"];
+            foreach ()
         }
     }
 
@@ -217,7 +231,6 @@ class ControllerUtilisateur
             self::formConnect();
         }
         else{
-            $panier = unserialize($_COOKIE["panier"]);
             $controller = "Utilisateur";
             $view = "Panier";
             $pagetitle = "Panier";
