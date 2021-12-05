@@ -11,7 +11,7 @@
     <div>
     <h6>Sport</h6>
     <ul class="cateSport">
-        <li><a href="#">Basket</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=basket">Basket</a></li>
         <li><a href="#">Badminton</a></li>
         <li><a href="#">Football</a></li>
         <li><a href="#">Tennis</a></li>

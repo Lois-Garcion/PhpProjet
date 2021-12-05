@@ -30,7 +30,7 @@ class ControllerProduit
 
     public static function readAllByCategorie(){
         require_once(File::build_path(array("model","Produit.php")));
-        $tab_produit = Produit::getAllByCategorie($_GET("categorie"));
+        $tab_produit = Produit::getAllByCategorie($_GET['categorie']);
 
         $controller = "Produit";
         $view = "ListProduit";
