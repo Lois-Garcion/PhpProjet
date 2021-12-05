@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="assets/css/produits.css" type="text/css">
         <link rel="stylesheet" href="assets/css/profil.css" type="text/css">
         <link rel="stylesheet" href="assets/css/popupform.css" type="text/css">
+        <link rel="stylesheet" href="assets/css/panier.css" type="text/css">
     </head>
     <body>
 
