@@ -131,7 +131,7 @@ class Produit{
     public static function getAllSortedByAttribute($attribute,$order){
 
         if($attribute == null){
-            $tab_produit = getAll();
+            $tab_produit = Produit::getAll();
             return $tab_produit;
         }
         else {
@@ -160,7 +160,7 @@ class Produit{
     public static function getAllByCategorie($categorie){
 
         if($categorie){
-            $tab_produit = getAll();
+            $tab_produit = Produit::getAll();
             return $tab_produit;
         }
         else {
@@ -234,5 +234,25 @@ class Produit{
                     return false;
                 }
             }
+        }
+
+        public static function search($search){
+            $sql = "SELECT * FROM p_produit WHERE idProduit = :search OR prix = :search OR categorie = :search OR nomProduit = :search ";
+            try{
+                $req_prep = Model::getPDO()->prepare($sql);
+                $values = array("search"=>$search);
+                $req_prep->execute($values);
+                $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Produit');
+                $tab_produit = $req_prep->fetchAll();
+                if(empty($tab_produit)){
+                    return false;
+                }
+                return $tab_produit;
+            }
+            catch (PDOException $e){
+                require_once(File::build_path(array("model","CustomeError.php")));
+                CustomError::callError($e);
+            }
+
         }
 }

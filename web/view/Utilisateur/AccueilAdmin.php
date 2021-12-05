@@ -6,4 +6,4 @@
     <label>Adresse mail</label>
     <input type="text" name="mail" placeholder="Entre le mail de la personne à passer admin">
     <input type="submit" class="button" value="Valider">
-</form>";
+<form>

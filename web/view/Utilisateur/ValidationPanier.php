@@ -10,6 +10,7 @@ else{
 }
 
 
+
 echo "<p>Prix total : " . $_SESSION["prixTotal"]."</p>";
 echo "<p>Vos informations : </p>";
 ?>
@@ -22,7 +23,7 @@ echo "<p>Vos informations : </p>";
     <input type="number" name="telephone" value="<?php if(isset($_SESSION["telephone"]))echo $_SESSION["telephone"];?>"maxlength="10" required>
     <label>Adresse</label>
     <label>Code Postal</label>
-    <input type="number" name="codePostal" value="<?php if($Adresse)echo $adresse->getCodePostal();?>" required>
+    <input type="number" name="codePostal" value="<?php if($adresse)echo $adresse->getCodePostal();?>" required>
     <label>Ville</label>
     <input type="text" name="ville" value="<?php if($adresse)echo $adresse->getVille();?>" required>
     <label>numero d'habitation</label>

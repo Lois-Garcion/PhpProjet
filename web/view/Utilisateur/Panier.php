@@ -1,7 +1,4 @@
 <?php
-echo "<pre>";
-var_dump($_SESSION["panier"]);
-echo "</pre>";
 
 $prix = 0;
 
