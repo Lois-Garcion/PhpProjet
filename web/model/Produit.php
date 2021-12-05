@@ -10,7 +10,7 @@ class Produit{
 
 
     public function __construct($idProduit=null, $prix=null, $categorie=null, $nomProduit=null) {
-        if(!is_null($idProduit) && !is_null($prix) &&!is_null($categorie) &&!is_null($nomProduit)) {
+        if(!is_null($prix) &&!is_null($categorie) &&!is_null($nomProduit)) {
             $this->idProduit = $idProduit;
             $this->prix = $prix;
             $this->categorie = $categorie;

@@ -2,6 +2,10 @@
 require_once (File::build_path(array("model","CustomError.php")));
 require_once (File::build_path(array("model","Utilisateur.php")));
 require_once (File::build_path(array("model","Produit.php")));
+require_once (File::build_path(array("model","Adresse.php")));
+require_once (File::build_path(array("model","Commande.php")));
+require_once (File::build_path(array("model","Ligne_Commande_Produit.php")));
+
 class ControllerUtilisateur
 {
 
@@ -45,8 +49,8 @@ class ControllerUtilisateur
                 $_SESSION["prenom"] = $user->getPrenom();
                 $_SESSION["telephone"] = $user->getTelephone();
                 $_SESSION["admin"] = $user->getAdmin();
+                $_SESSION["idAdresse"] = $user->getIdAdresse();
                 $_SESSION["panier"] = array();
-                $_SESSION["prixPanier"] = 0;
                 header("location: ./");
             } else {
                 $_SESSION["mail"] = $_POST["mail"];
@@ -129,9 +133,14 @@ class ControllerUtilisateur
     public static function upgradeAdmin(){
         if($_SESSION["admin"]=1) {
             $user = Utilisateur::getUserByLogin($_POST["mail"]);
-            $user->setAdmin(1);
-            $user->save();
-            self::accueilAdmin();
+            if(!$user){
+                CustomError::callError("Le mail de l'utilisateur n'existe pas");
+            }
+            else {
+                $user->setAdmin(1);
+                $user->save();
+                self::accueilAdmin();
+            }
         }
         else{
             CustomError::callError("Cette fonction est reservé aux administrateurs");
@@ -206,10 +215,12 @@ class ControllerUtilisateur
                 CustomError::callError("Ce produit n'existe pas ou n'est plus en stock");
             }
             else {
-                $panier = $_SESSION["panier"];
-                $panier[count($panier)] = array("idProduit" => $_POST["idProduit"], "quantiteProduit" => $_POST["quantite"]);
-                $_SESSION["panier"] = $panier;
-                $_SESSION["prixPanier"] = $_SESSION["prixPanier"] + $produit->getPrix() * $_POST["quantite"];
+                if(!isset($_SESSION["panier"][$_POST["idProduit"]])) {
+                    $_SESSION["panier"][$_POST["idProduit"]] = $_POST["quantite"];
+                }
+                else{
+                    $_SESSION["panier"][$_POST["idProduit"]] = $_SESSION["panier"][$_POST["idProduit"]] + $_POST["quantite"];
+                }
                 require_once(File::build_path(array("controller", "ControllerProduit.php")));
                 ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
             }
@@ -221,8 +232,24 @@ class ControllerUtilisateur
             self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
         }
         else {
-            $panier = $_SESSION["panier"];
-            foreach ()
+            unset($_SESSION["panier"][$_POST["idProduit"]]);
+            self::afficherPanier();
+        }
+    }
+
+    public static function updateQuantity(){
+        if (!isset($_SESSION["status"])) {
+            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        }
+        else{
+            if($_POST["quantite"] == 0){
+                unset($_SESSION["panier"][$_POST["idProduit"]]);
+                self::afficherPanier();
+            }
+            else {
+                $_SESSION["panier"][$_POST["idProduit"]] = $_POST["quantite"];
+                self::afficherPanier();
+            }
         }
     }
 
@@ -236,5 +263,93 @@ class ControllerUtilisateur
             $pagetitle = "Panier";
             require_once(File::build_path(array("view","view.php")));
         }
+    }
+
+    public static function annulerPanier(){
+        if(!isset($_SESSION["status"])){
+            self::formConnect();
+        }
+        else{
+            if(isset($_SESSION["prixTotal"]))unset($_SESSION["prixTotal"]);
+            $_SESSION["panier"] = array();
+            require_once (File::build_path(array("controller","ControllerProduit.php")));
+            ControllerProduit::readAll();
+        }
+    }
+
+    public static function validerPanier(){
+        if(!isset($_SESSION["status"])){
+            self::formConnect();
+        }
+        else{
+            if(isset($_SESSION["prixTotal"]) && $_SESSION["prixTotal"] != 0){
+                $controller = "Utilisateur";
+                $view = "ValidationPanier";
+                $pagetitle = "Panier";
+                require_once(File::build_path(array("view","view.php")));
+            }
+            else{
+                ControllerProduit::readAll();
+            }
+        }
+    }
+
+    public static function finaliserPanier(){
+        if(!isset($_SESSION["status"])){
+            self::formConnect();
+        }
+        else {
+
+            $user = Utilisateur::getUserByLogin($_SESSION["mail"]);
+            $user->setNom($_POST["nom"]);
+            $user->setPrenom($_POST["prenom"]);
+            $user->setTelephone($_POST["telephone"]);
+
+            $_SESSION["nom"] = $user->getNom();
+            $_SESSION["prenom"] = $user->getPrenom();
+            $_SESSION["telephone"] = $user->getTelephone();
+
+            if(is_null($user->getIdAdresse())){
+                $adresse = new Adresse(null,$_POST["codePostal"],$_POST["ville"],$_POST["numeroHabitation"],$_POST["nomRue"],$_POST["complement"],$_SESSION["mail"]);
+                $adresse->save();
+                $user->setIdAdresse(Adresse::getLastCreated()->getIdAdresse());
+                $_SESSION["idAdresse"] = $user->getIdAdresse();
+            }
+            else{
+                $adresse = Adresse::getById($_SESSION["idAdresse"]);
+                $adresse->setCodePostal($_POST["codePostal"]);
+                $adresse->setVille($_POST["ville"]);
+                $adresse->setNumeroHabitation($_POST["numeroHabitation"]);
+                $adresse->setNomRue($_POST["nomRue"]);
+                $adresse->setComplement($_POST["complement"]);
+                $adresse->setAdresseMailUtilisateur($_SESSION["mail"]);
+                $adresse->save();
+            }
+
+            $user->save();
+
+            $commande = new Commande(null,$_SESSION["prixTotal"],date('Y-m-d H:i:s'),$_SESSION["mail"],$user->getIdAdresse(),1);
+            $commande->save();
+            foreach ($_SESSION["panier"] as $key=>$p){
+                $lp = new Ligne_Commande_Produit(Commande::getLastCreated()->getIdCommande(),$key,$p);
+                $lp->save();
+            }
+            $_SESSION["panier"] = array();
+
+            $controller = "Commande";
+            $view = "FinCommande";
+            $pagetitle = "Merci de votre Commande";
+            require_once(File::build_path(array("view","view.php")));
+
+
+
+
+
+
+
+        }
+
+
+
     }
 }

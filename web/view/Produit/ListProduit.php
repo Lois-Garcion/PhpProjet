@@ -47,7 +47,7 @@
                     <h6>" . $v->getPrix() ."€". "<h6>
                 </div>
                 <form method=\"post\" action=\"?controller=ControllerUtilisateur&action=ajoutPanier\">
-                        <input type = \"hidden\" name = \"idProduit\" value=\" ". $v->getIdProduit() . " \" required>
+                        <input type = \"hidden\" name = \"idProduit\" value=\"".$v->getIdProduit()."\" required>
                         <div class=\"input-group\">
                             <label>Quantité</label>
                             <input type = \"number\" name=\"quantite\" placeholder=\"Quantité\" required>

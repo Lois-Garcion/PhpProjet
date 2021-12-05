@@ -27,6 +27,7 @@
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
                   }
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
+                  echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
               }
               if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){

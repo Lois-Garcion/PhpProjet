@@ -8,10 +8,10 @@ class Ligne_Commande_Produit
     private $idProduit;
     private $quantite;
 
-    public function __construct($idProduit = null, $idCommande = null, $quantite = null)
+    public function __construct($idCommande = null,$idProduit = null, $quantite = null)
     {
         if (!is_null($idCommande) && !is_null($idProduit) && !is_null($quantite)) {
-            $this->idProduit = Produit::getById($idProduit);
+            $this->idProduit = $idProduit;
             $this->idCommande = $idCommande;
             $this->quantite = $quantite;
         }
@@ -63,6 +63,18 @@ class Ligne_Commande_Produit
     public function setQuantite($quantite)
     {
         $this->quantite = $quantite;
+    }
+
+    public function save(){
+        $sql = "INSERT INTO p_ligne_commande_produit (idCommande,idProduit,quantite) VALUES(:idCommande,:idProduit,:quantite)";
+        try {
+            $req_prep = Model::getPDO()->prepare($sql);
+            $values = array("idCommande" => $this->idCommande, "idProduit" => $this->idProduit, "quantite" => $this->quantite);
+            $req_prep->execute($values);
+            return true;
+        } catch (PDOException $e) {
+            CustomError::callError($e);
+        }
     }
 
 

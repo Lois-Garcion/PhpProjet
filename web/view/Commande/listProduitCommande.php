@@ -1,7 +1,7 @@
 <?php
 
 if($tab_ligneCP == false){
-    echo "Il n'y a pas de produit dans la commande";
+    echo "Il n'y a pas de produit dans la Commande";
 }
 else {
     echo "<pre>";

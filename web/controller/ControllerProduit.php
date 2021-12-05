@@ -1,5 +1,10 @@
 <?php
-
+require_once (File::build_path(array("model","CustomError.php")));
+require_once (File::build_path(array("model","Utilisateur.php")));
+require_once (File::build_path(array("model","Produit.php")));
+require_once (File::build_path(array("model","Adresse.php")));
+require_once (File::build_path(array("model","Commande.php")));
+require_once (File::build_path(array("model","Ligne_Commande_Produit.php")));
 class ControllerProduit
 {
 
@@ -35,7 +40,7 @@ class ControllerProduit
     }
     public static function readAllMinPriceMaxPrice(){
         require_once(File::build_path(array("model","Produit.php")));
-        $tab_produit = Produit::getAllByMinMaxPrice($_GET("minPrice"),$_GET("maxPrice"));
+        $tab_produit = Produit::getAllByMinMaxPrice($_POST("minPrice"),$_POST("maxPrice"));
 
         $controller = "Produit";
         $view = "ListProduit";
@@ -43,8 +48,6 @@ class ControllerProduit
 
         require_once(File::build_path(array("view","view.php")));
     }
-
-
 
 
     public static function read(){
