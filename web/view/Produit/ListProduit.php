@@ -24,11 +24,11 @@
     <form method="post" action="?controller=ControllerProduit&action=readAllMinPriceMaxPrice">
         <div class="prixMini">
                 <label for="form">Min €</label>
-                <input type="text" name="minPrice" placeholder="Entrez un prix minimum">
+                <input type="number" name="minPrice" placeholder="Entrez un prix minimum">
         </div>
         <div class="prixMax">
                 <label for="to">Max €</label>
-                <input type="text" name="maxPrice" placeholder="Entrez un prix maximum">
+                <input type="number" name="maxPrice" placeholder="Entrez un prix maximum">
         </div>
         <button type="submit" name="submit" class="submit-btn">Valider</button>
     </form>
@@ -45,7 +45,7 @@
             echo "
                 <div class = \"product-card\">
                     <div class = \"product-image\">
-                        <img src =\"assets/images/raquette-yonex.jpg\">
+                        <img src =".$v->getFilepath().">
                     </div>
                     <div class = \"product-info\">
                         <h5>" . $v->getNomProduit() . "</h5>
