@@ -24,12 +24,13 @@
     <form method="post" action="?controller=ControllerProduit&action=readAllMinPriceMaxPrice">
         <div class="prixMini">
                 <label for="form">Min €</label>
-                <input type="text" name="minPrice" placeholder="Entrez un prix minimum" onchange="this.form.submit()">
+                <input type="text" name="minPrice" placeholder="Entrez un prix minimum">
         </div>
         <div class="prixMax">
                 <label for="to">Max €</label>
-                <input type="text" name="maxPrice" placeholder="Entrez un prix maximum" onchange="this.form.submit()">
+                <input type="text" name="maxPrice" placeholder="Entrez un prix maximum">
         </div>
+        <button type="submit" name="submit" class="submit-btn">Valider</button>
     </form>
 
 </section>
@@ -39,28 +40,30 @@
     if($tab_produit == false){
         echo "Il n'y a pas de produit";
     }
-    foreach ($tab_produit as $v){
-        echo "
-            <div class = \"product-card\">
-                <div class = \"product-image\">
-                    <img src =\"assets/images/raquette-yonex.jpg\">
-                </div>
-                <div class = \"product-info\">
-                    <h5>" . $v->getNomProduit() . "</h5>
-                    <h7>" . $v->getCategorie() . "</h7>
-                    <h6>" . $v->getPrix() ."€". "<h6>
-                </div>
-                <form method=\"post\" action=\"?controller=ControllerUtilisateur&action=ajoutPanier\">
-                        <input type = \"hidden\" name = \"idProduit\" value=\"".$v->getIdProduit()."\" required>
-                        <div class=\"input-group\">
-                            <label>Quantité</label>
-                            <input type = \"number\" name=\"quantite\" placeholder=\"Quantité\" required>
-                        </div>                     
-                        <div class=\"input-group\">
-                            <button type=\"submit\" name=\"submit\" class=\"submit-btn\">Ajouter</button>
-                        </div>    
-                 </form>
-            </div>";
+    else{
+        foreach ($tab_produit as $v) {
+            echo "
+                <div class = \"product-card\">
+                    <div class = \"product-image\">
+                        <img src =\"assets/images/raquette-yonex.jpg\">
+                    </div>
+                    <div class = \"product-info\">
+                        <h5>" . $v->getNomProduit() . "</h5>
+                        <h7>" . $v->getCategorie() . "</h7>
+                        <h6>" . $v->getPrix() . "€" . "<h6>
+                    </div>
+                    <form method=\"post\" action=\"?controller=ControllerUtilisateur&action=ajoutPanier\">
+                            <input type = \"hidden\" name = \"idProduit\" value=\"" . $v->getIdProduit() . "\" required>
+                            <div class=\"input-group\">
+                                <label>Quantité</label>
+                                <input type = \"number\" name=\"quantite\" placeholder=\"Quantité\" required>
+                            </div>                     
+                            <div class=\"input-group\">
+                                <button type=\"submit\" name=\"submit\" class=\"submit-btn\">Ajouter</button>
+                            </div>    
+                     </form>
+                </div>";
+        }
     }
     ?>
 </section>

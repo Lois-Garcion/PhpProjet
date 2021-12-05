@@ -231,7 +231,7 @@ class Produit{
     }
 
     public static function getAllByMinMaxPrice($minPrix,$maxPrix){
-            $sql = "SELECT * FROM p_produit WHERE prix > :minPrix AND prix < :maxPrix ";
+            $sql = "SELECT * FROM p_produit WHERE prix >= :minPrix AND prix <= :maxPrix ";
         try{
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("minPrix" => $minPrix,"maxPrix"=> $maxPrix);
