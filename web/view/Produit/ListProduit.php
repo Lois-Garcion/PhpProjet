@@ -12,21 +12,25 @@
     <h6>Sport</h6>
     <ul class="cateSport">
         <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=basket">Basket</a></li>
-        <li><a href="#">Badminton</a></li>
-        <li><a href="#">Football</a></li>
-        <li><a href="#">Tennis</a></li>
-        <li><a href="#">Running</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=badminton">Badminton</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=football">Football</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=tennis">Tennis</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=running">Running</a></li>
+        <li><a href="?controller=ControllerProduit&action=readAllByCategorie&categorie=ping-pong">Ping-Pong</a></li>
     </ul>
     </div>
 
     <h6>Prix</h6>
-    <div class="ajust-price">
-        <span class="min-max">0€</span>
-        <form class="ajusteur">
-            <input id="multi" name="prix" class="multi-range" type="range" />
-        </form>
-        <span class="min-max">200€</span>
-    </div>
+    <form method="post" action="?controller=ControllerProduit&action=readAllMinPriceMaxPrice">
+        <div class="prixMini">
+                <label for="form">Min €</label>
+                <input type="text" name="minPrice" placeholder="Entrez un prix minimum" onchange="this.form.submit()">
+        </div>
+        <div class="prixMax">
+                <label for="to">Max €</label>
+                <input type="text" name="maxPrice" placeholder="Entrez un prix maximum" onchange="this.form.submit()">
+        </div>
+    </form>
 
 </section>
 

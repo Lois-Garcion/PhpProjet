@@ -40,7 +40,7 @@ class ControllerProduit
     }
     public static function readAllMinPriceMaxPrice(){
         require_once(File::build_path(array("model","Produit.php")));
-        $tab_produit = Produit::getAllByMinMaxPrice($_POST("minPrice"),$_POST("maxPrice"));
+        $tab_produit = Produit::getAllByMinMaxPrice($_POST['minPrice'],$_POST['maxPrice']);
 
         $controller = "Produit";
         $view = "ListProduit";
