@@ -16,10 +16,6 @@
             </div>
             <form method="post" action="?controller=ControllerProduit&action=created">
                 <div class="input-group">
-                    <label>Identifiant produit</label>
-                    <input type = "number" name="idProduit" placeholder="Entrez l'id du produit" required>
-                </div>
-                <div class="input-group">
                     <label>Nom du produit</label>
                     <input type = "text" name="nomProduit" placeholder="Entrez le nom du produit" required>
                 </div>
@@ -30,6 +26,17 @@
                 <div class="input-group">
                     <label>Categorie</label>
                     <input type = "text" name="categorie" placeholder="Entrez la catégorie du produit" required>
+                </div>
+                <div class="input-group">
+                    <label>Categorie</label>
+                    <select name="categorie">
+                        <option value ="football">Football</option>
+                        <option value ="badminton">Badminton</option>
+                        <option value ="tennis">Tennis</option>
+                        <option value ="running">Running</option>
+                        <option value ="basket">Basket</option>
+                        <option value ="ping-pong">Ping-Pong</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label>Image</label>

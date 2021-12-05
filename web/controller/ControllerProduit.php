@@ -70,7 +70,46 @@ class ControllerProduit
 
     public static function created(){
         require_once(File::build_path(array("model", "Produit.php")));
-        $produit = new Produit($_POST["idProduit"], $_POST["prix"], $_POST["categorie"], $_POST["nomProduit"]);
+
+        require("model/ModelGenome.php");
+        if(isset($_POST['submit'])) {
+            $file = $_FILES['file'];
+
+            $fileName = $file['name'];
+            $fileTmpName = $file['tmp_name'];
+            $fileSize = $file['size'];
+            $fileError = $file['error'];
+            $fileType = $file['type'];
+
+            $fileExt = explode('.', $fileName);
+            $fileActualExt = strtolower(end($fileExt));
+
+            //list des extensions que l'on accepte je sais pas si il en aura plus
+            $allow = array('png','jpg','jpeg');
+
+            if (in_array($fileActualExt, $allow)) {
+                if ($fileError === 0) {
+                    if ($fileSize < 1000000) {  //IL FAUDRA DEFINIR LA TAILLE MAX DU FICHIER pour l'instant c'est 1 million de kylobites
+                        $fileNameNew = uniqid('', true) . "." . $fileActualExt;
+                        $fileDestination = 'uploads/genome/' . $fileNameNew;
+                        $moved = move_uploaded_file($fileTmpName, $fileDestination);
+                        if ($moved === false) {
+                            CustomError::callError("Le fichier n'a pas été déplacé");
+                        }
+                    } else {
+                        CustomError::callError("Ce fichier est trop lourd");
+                    }
+                } else {
+                    CustomError::callError("Le fichier comporte une erreur");
+                }
+            }
+            else{
+                CustomError::callError("Ce type de fichier n'est pas autorisée");
+            }
+        }
+
+
+        $produit = new Produit($_POST["idProduit"], $_POST["prix"], $_POST["categorie"], $_POST["nomProduit"],);
         $produit->save();
         header("location: ./?controller=ControllerProduit&action=readAll");
     }
