@@ -164,7 +164,7 @@ class Commande
 
     public static function getAll()
     {
-        $sql = "SELECT * FROM p_commande ORDER BY date";
+        $sql = "SELECT * FROM p_commande ORDER BY DESC date";
         try {
             $req_prep = Model::getPDO()->query($sql);
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Commande');

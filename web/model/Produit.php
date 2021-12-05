@@ -7,16 +7,36 @@ class Produit{
     private $prix;
     private $categorie;
     private $nomProduit;
+    private $filepath;
 
 
-    public function __construct($idProduit=null, $prix=null, $categorie=null, $nomProduit=null) {
-        if(!is_null($prix) &&!is_null($categorie) &&!is_null($nomProduit)) {
+    public function __construct($idProduit=null, $prix=null, $categorie=null, $nomProduit=null, $filepath=null) {
+        if(!is_null($prix) &&!is_null($categorie) &&!is_null($nomProduit) && !is_null($filepath)) {
             $this->idProduit = $idProduit;
             $this->prix = $prix;
             $this->categorie = $categorie;
             $this->nomProduit = $nomProduit;
+            $this->filepath = $filepath;
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFilepath()
+    {
+        return $this->filepath;
+    }
+
+    /**
+     * @param mixed $filepath
+     */
+    public function setFilepath($filepath)
+    {
+        $this->filepath = $filepath;
+    }
+
+
 
     /**
      * @return mixed
@@ -81,6 +101,42 @@ class Produit{
     {
         $this->nomProduit = $nomProduit;
     }
+
+
+    public function save(){
+        if(!self::getById($this->getIdProduit())) {
+            $insert = "INSERT INTO p_produit(idProduit, prix, categorie, nomProduit,filepath) VALUES (:idProduit, :prix, :categorie, :nomProduit,:filepath)";
+            try {
+                $req_prep = Model::getPDO()->prepare($insert);
+                $values = array("idProduit" => $this->getIdProduit(), "prix" => $this->getPrix(), "categorie" => $this->getCategorie(), "nomProduit" => $this->getNomProduit(),"filepath"=>$this->filepath);
+                $req_prep->execute($values);
+                return true;
+            } catch (PDOException $e) {
+                CustomError::callError($e);
+                return false;
+            }
+        }
+        else {
+            $update = "UPDATE p_produit SET prix = :prix, categorie = :categorie, nomProduit = :nomProduit, filepath = :filepath WHERE idProduit = :idProduit";
+            try {
+                $req_prep = Model::getPDO()->prepare($update);
+                $values = array(
+                    "prix" => $this->getPrix(),
+                    "categorie" => $this->getCategorie(),
+                    "nomProduit" => $this->getNomProduit(),
+                    "idProduit" => $this->getIdProduit(),
+                    "filepath" => $this->getFilepath()
+                );
+                $req_prep->execute($values);
+                return true;
+            } catch (PDOException $e) {
+                CustomError::callError($e);
+                return false;
+            }
+        }
+    }
+
+
 
 
 
@@ -158,14 +214,7 @@ class Produit{
     }
 
     public static function getAllByCategorie($categorie){
-
-        if($categorie){
-            $tab_produit = Produit::getAll();
-            return $tab_produit;
-        }
-        else {
             $sql = "SELECT * FROM p_produit WHERE categorie = :categorie ";
-        }
         try{
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("categorie" => $categorie);
@@ -182,13 +231,7 @@ class Produit{
     }
 
     public static function getAllByMinMaxPrice($minPrix,$maxPrix){
-        if($minPrix == null & $maxPrix == null){
-            $tab_produit = getAll();
-            return $tab_produit;
-        }
-        else {
             $sql = "SELECT * FROM p_produit WHERE prix > :minPrix AND prix < :maxPrix ";
-        }
         try{
             $req_prep = Model::getPDO()->prepare($sql);
             $values = array("minPrix" => $minPrix,"maxPrix"=> $maxPrix);
@@ -204,37 +247,6 @@ class Produit{
         }
     }
 
-    public function save(){
-        if(!self::getById($this->getIdProduit())) {
-            $insert = "INSERT INTO p_produit(idProduit, prix, categorie, nomProduit) VALUES (:idProduit, :prix, :categorie, :nomProduit)";
-            try {
-                $req_prep = Model::getPDO()->prepare($insert);
-                $values = array("idProduit" => $this->getIdProduit(), "prix" => $this->getPrix(), "categorie" => $this->getCategorie(), "nomProduit" => $this->getNomProduit());
-                $req_prep->execute($values);
-                return true;
-            } catch (PDOException $e) {
-                CustomError::callError($e);
-                return false;
-            }
-        }
-            else {
-                $update = "UPDATE p_produit SET prix = :prix, categorie = :categorie, nomProduit = :nomProduit WHERE idProduit = :idProduit";
-                try {
-                    $req_prep = Model::getPDO()->prepare($update);
-                    $values = array(
-                        "prix" => $this->getPrix(),
-                        "categorie" => $this->getCategorie(),
-                        "nomProduit" => $this->getNomProduit(),
-                        "idProduit" => $this->getIdProduit()
-                        );
-                    $req_prep->execute($values);
-                    return true;
-                } catch (PDOException $e) {
-                    CustomError::callError($e);
-                    return false;
-                }
-            }
-        }
 
         public static function search($search){
             $sql = "SELECT * FROM p_produit WHERE idProduit = :search OR prix = :search OR categorie = :search OR nomProduit = :search ";
