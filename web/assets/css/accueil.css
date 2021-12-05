@@ -1,0 +1,37 @@
+.hero{
+    min-height: 90vh;
+    background: linear-gradient(rgb(0, 0, 0, 0.6), transparent), url("../images/background-header.jpeg");
+    background-size: cover;
+    background-position: bottom;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero h2{
+    font-size: 3em;
+}
+
+.hero h3{
+    font-size: 1.5em;
+    padding: 1.5rem;
+}
+
+button{
+    border-radius: 15px;
+    padding: 2rem 6rem;
+    background: black;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    transition-duration: 1.2s;
+}
+
+button:hover{
+    background-color: #002a38;
+    border-width: 2px;
+    border-color: black;
+}
