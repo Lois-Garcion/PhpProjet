@@ -2,17 +2,14 @@
 <hr />
 
     <div class="box">
-        <div class="line">
-            <p>Nom: </p>
-            <p style="border: 1px solid"><?php if(!is_null($_SESSION["nom"])){echo $_SESSION["nom"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="line">
-            <p>Prénom: </p>
-            <p style="border: 1px solid"><?php if(!is_null($_SESSION["prenom"])){echo $_SESSION["prenom"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="open-btn">
-            <button class="open-button" onclick="openForm()"><strong>Modifier ces informations</strong></button>
-        </div>
+      <ul class="listInfos">
+        <li class="infoTitle"><p>Nom: </p></li>
+        <li class="info"><p style="border: 1px solid"><?php if(!is_null($_SESSION["nom"])){echo $_SESSION["nom"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+        <li class="infoTitle"><p>Prénom: </p></li>
+        <li class="info"><p style="border: 1px solid"><?php if(!is_null($_SESSION["prenom"])){echo $_SESSION["prenom"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+        <li class="open-btn"><button class="open-button" onclick="openForm()"><strong>Modifier ces informations</strong></button></li>
+      </ul>
+
         <div class="login-popup">
             <div class="form-popup" id="popupForm">
                 <form action="?controller=ControllerUtilisateur&action=updateNames" method="post" class="form-container">
@@ -41,73 +38,62 @@
         </script>
     </div>
 
+
     <div class="box">
-        <div class="line">
-            <p>Adresse mail: (Il s'agit de votre login) </p>
-            <p style="border: 1px solid"><?php if(!is_null($_SESSION["mail"])){echo $_SESSION["mail"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <p>Vous ne pouvez pas modifier cette information</p>
+      <ul class="listInfos">
+        <li class="infoTitle"><p>Adresse mail: (Il s'agit de votre login) </p></li>
+        <li class="info"><p style="border: 1px solid"><?php if(!is_null($_SESSION["mail"])){echo $_SESSION["mail"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+        <li class="info"><p>Vous ne pouvez pas modifier cette information. </p></li>
+      </ul>
     </div>
 
     <div class="box">
-        <div class="line">
-            <p>Numéro de téléphone: </p>
-            <p style="border: 1px solid"><?php if(!is_null($_SESSION["telephone"])){echo $_SESSION["telephone"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="open-btn">
-            <button class="open-button" onclick="openForm2()"><strong>Modifier mon numéro</strong></button>
-        </div>
-        <div class="login-popup">
-            <div class="form-popup" id="popupForm2">
-                <form action="?controller=ControllerUtilisateur&action=updatePhone" method="post" class="form-container">
-                    <h2>Changer mes informations</h2>
-                    <label for="telephone">
-                        <strong>Téléphone</strong>
-                    </label>
-                    <input type="text" id="telephone" placeholder="Votre numéro" name="telephone" required>
-                    <button type="submit" class="btn">Enregistrer</button>
-                    <button type="button" class="btn cancel" onclick="closeForm2()">Annuler</button>
-                </form>
-            </div>
-        </div>
-        <script>
-            function openForm2() {
-                document.getElementById("popupForm2").style.display="block";
-            }
+      <ul class="listInfos">
+        <li class="infoTitle"><p>Numéro de téléphone: </p></li>
+        <li class="info"><p style="border: 1px solid"><?php if(!is_null($_SESSION["telephone"])){echo $_SESSION["telephone"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+        <li class="open-btn"><button class="open-button" onclick="openForm2()"><strong>Modifier mon numéro</strong></button></li>
+      </ul>
 
-            function closeForm2() {
-                document.getElementById("popupForm2").style.display="none";
-            }
-        </script>
-    </div>
+      <div class="login-popup">
+          <div class="form-popup" id="popupForm2">
+              <form action="?controller=ControllerUtilisateur&action=updatePhone" method="post" class="form-container">
+                  <h2>Changer mes informations</h2>
+                  <label for="telephone">
+                      <strong>Téléphone</strong>
+                  </label>
+                  <input type="text" id="telephone" placeholder="Votre numéro" name="telephone" required>
+                  <button type="submit" class="btn">Enregistrer</button>
+                  <button type="button" class="btn cancel" onclick="closeForm2()">Annuler</button>
+              </form>
+          </div>
+      </div>
+      <script>
+          function openForm2() {
+              document.getElementById("popupForm2").style.display="block";
+          }
+
+          function closeForm2() {
+              document.getElementById("popupForm2").style.display="none";
+          }
+      </script>
+  </div>
 
     <div class="box">
-        <div class="line">
-            <p>Mon adresse:</p>
+        <ul class="listInfos">
+            <li class="infoTitle"><p>Mon adresse:</p></li>
+            <li class="infoTitle"><p>Numero logement: </p></li>
+            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNumeroHabitation();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="infoTitle"><p>Intitulé rue: </p></li>
+            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNomRue();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="infoTitle"><p>Complément d'adresse: </p></li>
+            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getComplement();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="infoTitle"><p>Code postal: </p></li>
+            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getCodePostal();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="infoTitle"><p>Ville: </p></li>
+            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getVille();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="open-btn"><button class="open-button" onclick="openForm3()"><strong>Modifier mon adresse ou ses informations</strong></button></li>
         </div>
-        <div class="line">
-            <p>Numero logement: </p>
-            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNumeroHabitation();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="line">
-            <p>Intitulé rue: </p>
-            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNomRue();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="line">
-            <p>Complément d'adresse: </p>
-            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getComplement();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="line">
-            <p>Code postal: </p>
-            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getCodePostal();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="line">
-            <p>Ville: </p>
-            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getVille();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
-        </div>
-        <div class="open-btn">
-            <button class="open-button" onclick="openForm3()"><strong>Modifier mon adresse ou ses informations</strong></button>
-        </div>
+        
         <div class="login-popup">
             <div class="form-popup" id="popupForm3">
                 <form action="?controller=ControllerUtilisateur&action=updateAdresse" method="post" class="form-container">
