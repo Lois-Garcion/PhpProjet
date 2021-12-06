@@ -1,4 +1,6 @@
-<h1>Merci de votre fidelité, votre commande devrait arriver d'ici une semaine</h1>
-
-
-<a href="?controller=ControllerCommande&action=readAll">Cliquez ici pour voir la liste de vos commandes</a>
+<div class="validation-order">
+    <h1>Merci de votre commande !</h1>
+    <img src="assets/images/validation.jpg">
+    <h2>Nous l'avons bien reçu et nous la traiterons dans les plus brefs délais</h2>
+    <button onclick="location.href='?controller=ControllerCommande&action=readAll'">Voir la liste des commandes</button>
+</div>

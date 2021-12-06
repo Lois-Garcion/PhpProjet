@@ -1,0 +1,36 @@
+.validation-order{
+    font-family: Menlo, monospace;
+    margin-top: 0;
+    text-align: center;
+}
+
+.validation-order h1{
+    font-size: 5em;
+}
+
+.validation-order h2{
+    font-size: 2.5em;
+}
+
+.validation-order button{
+    font-family: Menlo, monospace;
+    font-size: 2.5em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition-duration: 1.2s;
+    background: white;
+    color: black;
+    border-color: black;
+    margin-bottom: 30px;
+}
+
+.validation-order button:hover{
+    background-color: rgba(10, 224, 1, 0.47);
+    border-width: 2px;
+    border-color: black;
+}
+
+.validation-order img{
+    width: 300px;
+    height: 300px;
+}

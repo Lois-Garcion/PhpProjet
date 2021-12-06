@@ -1,5 +1,5 @@
 .hero{
-    min-height: 90vh;
+    min-height: 100vh;
     background: linear-gradient(rgb(0, 0, 0, 0.6), transparent), url("../images/background-header.jpeg");
     background-size: cover;
     background-position: bottom;
@@ -7,19 +7,23 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
     align-items: center;
 }
 
 .hero h2{
+    font-family: Menlo, monospace;
     font-size: 3em;
 }
 
 .hero h3{
+    font-family: Menlo, monospace;
     font-size: 1.5em;
     padding: 1.5rem;
 }
 
 .hero button{
+    font-family: Menlo, monospace;
     border-radius: 15px;
     padding: 2rem 6rem;
     background: black;

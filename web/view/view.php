@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="assets/css/listCommande.css" type="text/css">
         <link rel="stylesheet" href="assets/css/connexion.css" type="text/css">
         <link rel="stylesheet" href="assets/css/validationPanier.css" type="text/css">
+        <link rel="stylesheet" href="assets/css/finCommande.css" type="text/css">
     </head>
     <body>
 
