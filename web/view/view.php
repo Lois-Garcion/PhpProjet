@@ -63,9 +63,24 @@
         <footer class="footer">
           <div class="menu">
             <ul>
-              <li><a href="https://webinfo.iutmontp.univ-montp2.fr/~garcionl/eCommerce/projetPHP/web/index.php">Accueil</a></li>
-              <li><a href="https://youtu.be/dQw4w9WgXcQ">Nos produits</a></li>
-              <li><a href="https://youtu.be/dQw4w9WgXcQ">Mon profil</a></li>
+              <li><a href="./">Accueil</a></li>
+                <?php if(!isset($_SESSION["status"])){
+                        echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
+                }
+                else{
+                    if($_SESSION["admin"]==1){
+                        echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
+                    }
+                    echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
+                    echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
+                }
+                if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){
+                    echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
+                }
+                ?>
+
+              <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
+
             </ul>
           </div>
         </footer>
