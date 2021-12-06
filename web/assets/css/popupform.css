@@ -7,12 +7,10 @@
 .open-button {
     background-color: #1c87c9;
     color: white;
-    padding: 12px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     opacity: 0.8;
-    position: fixed;
 }
 /* Positionnez la forme Popup */
 .login-popup {
@@ -24,9 +22,7 @@
 .form-popup {
     display: none;
     position: fixed;
-    left: 45%;
     top:5%;
-    transform: translate(-45%,5%);
     border: 2px solid #666;
     z-index: 9;
 }
