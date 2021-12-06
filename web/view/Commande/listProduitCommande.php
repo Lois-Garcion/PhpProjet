@@ -1,13 +1,32 @@
+<div class="container">
 <?php
 
-if($tab_ligneCP == false){
-    echo "Il n'y a pas de produit dans la Commande";
+if(empty($tab_ligneCP)){
+    echo "Vous n'avez jamais fait de commandes";
 }
 else {
-    echo "<pre>";
+    echo"<ul class=\"responsive-table\">";
+    echo"
+        <li class=\"table-header\">
+      <div class=\"col col-1\">ID</div>
+      <div class=\"col col-2\">Nom produit</div>
+      <div class=\"col col-3\">Prix</div>
+      <div class=\"col col-4\">Quantité</div>
+    </li>
+    ";
     foreach ($tab_ligneCP as $v) {
         $produit = Produit::getById($v->getIdProduit());
-        echo "<p>" . $produit->getNomProduit() . " d'id : " . $v->getIdProduit() . " , de prix : " . $produit->getPrix() . " , de categorie : " . $produit->getCategorie() . " de quantite : " . $v->getQuantite() . "</p>";
+        echo "
+        <li class=\"table-row\">
+              <div class=\"col col-1\" data-label=\"id\">" . $v->getIdProduit() . "</div>
+              <div class=\"col col-2\" data-label=\"nom\">" . $produit->getNomProduit() . "</div>
+              <div class=\"col col-3\" data-label=\"prix\">" . $produit->getPrix()*$v->getQuantite() . "€" . "</div>
+              <div class=\"col col-4\" data-label=\"quantite\">" . $v->getQuantite() . "</div>
+        </li>
+        ";
     }
 }
 ?>
+    </ul>
+</div>
+
