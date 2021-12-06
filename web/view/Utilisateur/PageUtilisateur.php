@@ -55,10 +55,10 @@
             <p style="border: 1px solid"><?php if(!is_null($_SESSION["telephone"])){echo $_SESSION["telephone"];} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
         </div>
         <div class="open-btn">
-            <button class="open-button" onclick="openForm()"><strong>Modifier mon numéro</strong></button>
+            <button class="open-button" onclick="openForm2()"><strong>Modifier mon numéro</strong></button>
         </div>
         <div class="login-popup">
-            <div class="form-popup" id="popupForm">
+            <div class="form-popup" id="popupForm2">
                 <form action="?controller=ControllerUtilisateur&action=updatePhone" method="post" class="form-container">
                     <h2>Changer mes informations</h2>
                     <label for="telephone">
@@ -66,17 +66,84 @@
                     </label>
                     <input type="text" id="telephone" placeholder="Votre numéro" name="telephone" required>
                     <button type="submit" class="btn">Enregistrer</button>
-                    <button type="button" class="btn cancel" onclick="closeForm()">Annuler</button>
+                    <button type="button" class="btn cancel" onclick="closeForm2()">Annuler</button>
                 </form>
             </div>
         </div>
         <script>
-            function openForm() {
-                document.getElementById("popupForm").style.display="block";
+            function openForm2() {
+                document.getElementById("popupForm2").style.display="block";
             }
 
-            function closeForm() {
-                document.getElementById("popupForm").style.display="none";
+            function closeForm2() {
+                document.getElementById("popupForm2").style.display="none";
+            }
+        </script>
+    </div>
+
+    <div class="box">
+        <div class="line">
+            <p>Mon adresse:</p>
+        </div>
+        <div class="line">
+            <p>Numero logement: </p>
+            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNumeroHabitation();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
+        </div>
+        <div class="line">
+            <p>Intitulé rue: </p>
+            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNomRue();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
+        </div>
+        <div class="line">
+            <p>Complément d'adresse: </p>
+            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getComplement();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
+        </div>
+        <div class="line">
+            <p>Code postal: </p>
+            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getCodePostal();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
+        </div>
+        <div class="line">
+            <p>Ville: </p>
+            <p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getVille();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p>
+        </div>
+        <div class="open-btn">
+            <button class="open-button" onclick="openForm3()"><strong>Modifier mon adresse ou ses informations</strong></button>
+        </div>
+        <div class="login-popup">
+            <div class="form-popup" id="popupForm3">
+                <form action="?controller=ControllerUtilisateur&action=updateAdresse" method="post" class="form-container">
+                    <h2>Changer mes informations</h2>
+                    <label for="numeroHabitation">
+                        <strong>Numéro logement: </strong>
+                    </label>
+                    <input type="text" id="numeroHabitation" placeholder="Numéro du logement" name="numeroHabitation" required>
+                    <label for="nomRue">
+                        <strong>Nom de la rue</strong>
+                    </label>
+                    <input type="text" id="nomRue" placeholder="Nom de la rue" name="nomRue" required>
+                    <label for="complement">
+                        <strong>Complément d'adresse</strong>
+                    </label>
+                    <input type="text" id="complement" placeholder="Complément d'adresse" name="complement" required>
+                    <label for="codePostal">
+                        <strong>Code postal</strong>
+                    </label>
+                    <input type="text" id="codePostal" placeholder="Code postal" name="codePostal" required>
+                    <label for="ville">
+                        <strong>Ville</strong>
+                    </label>
+                    <input type="text" id="ville" placeholder="Ville" name="ville" required>
+                    <button type="submit" class="btn">Enregistrer</button>
+                    <button type="button" class="btn cancel" onclick="closeForm3()">Annuler</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            function openForm3() {
+                document.getElementById("popupForm3").style.display="block";
+            }
+
+            function closeForm3() {
+                document.getElementById("popupForm3").style.display="none";
             }
         </script>
     </div>
