@@ -1,25 +1,100 @@
-.connexion{
-    display: flex;
-    flex-wrap: wrap;
+.connect-container *{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: Menlo, monospace;
 }
 
-.connexion input{
-    height: 20px;
-    border-radius: 3px;
-    border: 3px solid black;
+.connect-container{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.connexion .button{
-    height: 50px;
-    border-radius: 3px;
-    transition: 0.4s;
-    color: #002a38;
+.connect-container{
+    background: #fff;
+    width: 410px;
+    padding: 30px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.connect-container .text{
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+}
+.connect-container form{
+    margin-top: -20px;
+}
+.connect-container form .data{
+    height: 45px;
+    width: 100%;
+    margin: 40px 0;
+}
+.connect-container form .data label{
+    font-size: 18px;
+}
+.connect-container form .data input{
+    height: 100%;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 17px;
+    border: 1px solid silver;
+}
+.connect-container form .data input:focus{
+    border-color: #3498db;
+    border-bottom-width: 2px;
+}
+.connect-container form .forgot-pass{
+    margin-top: -8px;
+}
+.connect-container form .forgot-pass a{
+    color: #3498db;
+    text-decoration: none;
+}
+.connect-container form .forgot-pass a:hover{
+    text-decoration: underline;
+}
+.connect-container form .btn{
+    margin: 30px 0;
+    height: 45px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.connect-container form .btn .inner{
+    height: 100%;
+    width: 300%;
+    position: absolute;
+    left: -100%;
+    z-index: -1;
+    background: -webkit-linear-gradient(right, #001580, #031dc5, #001580, #031dc5);
+    transition: all 0.4s;
+}
+.connect-container form .btn:hover .inner{
+    left: 0;
+}
+.connect-container form .btn button{
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    border:1px solid transparent;
-    font-size: 16px;
 }
-
-.connexion button:hover{
-    background-color: transparent;
-    border-color: #002a38;
+.connect-container form .signup-link{
+    text-align: center;
+}
+.connect-container form .signup-link a{
+    color: #3498db;
+    text-decoration: none;
+}
+.connect-container form .signup-link a:hover{
+    text-decoration: underline;
 }

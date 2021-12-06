@@ -1,12 +1,23 @@
- <h1>Connexion</h1>
-    <hr />
-        <form action="?controller=ControllerUtilisateur&action=connect" method="post">
-                <label>login</label>
-                <input type="email" name="mail" placeholder="Entrez votre mail">
-                <label>Mot de passe</label>
-                <input type="password" name="password" placeholder="Entrez votre mot de passe">
-                <input type="submit" class="button" value="Login">
-        </form>
- <p>Vous n'avez pas de compte?</p>
 
-    <a href="?controller=ControllerUtilisateur&action=inscription" style="color:black">S'inscrire</a>
+     <div class="connect-container">
+         <div class="text">
+             Connexion
+         </div>
+         <form action="?controller=ControllerUtilisateur&action=connect" method="post">
+             <div class="data">
+                 <label>Adresse mail</label>
+                 <input type="email" name="mail" placeholder="Entrez votre mail" required>
+             </div>
+             <div class="data">
+                 <label>Mot de passe</label>
+                 <input type="password" name="password" placeholder="Entrez votre mot de passe" required>
+             </div>
+             <div class="btn">
+                 <div class="inner"></div>
+                 <button type="submit">Se connecter</button>
+             </div>
+             <div class="signup-link">
+                 Pas encore membre ? <a href="?controller=ControllerUtilisateur&action=inscription">Inscrivez-vous ici</a>
+             </div>
+         </form>
+     </div>

@@ -1,6 +1,4 @@
-<h1>Validation de la commande</h1>
 
-<h2>Recapitulatif</h2>
 <?php
 if(!is_null($_SESSION["idAdresse"])) {
     $adresse = Adresse::getById($_SESSION["idAdresse"]);
@@ -8,36 +6,57 @@ if(!is_null($_SESSION["idAdresse"])) {
 else{
     $adresse = false;
 }
-
-
-
-echo "<p>Prix total : " . $_SESSION["prixTotal"]."</p>";
-echo "<p>Vos informations : </p>";
 ?>
-<form method="post" action="?controller=ControllerUtilisateur&action=finaliserPanier">
-    <label>Nom</label>
-    <input type="text" name="nom" value="<?php if(isset($_SESSION["nom"]))echo $_SESSION["nom"];?>" required>
-    <label>Prenom</label>
-    <input type="text" name="prenom" value="<?php if(isset($_SESSION["prenom"]))echo $_SESSION["prenom"];?>" required>
-    <label>Telephone</label>
-    <input type="number" name="telephone" value="<?php if(isset($_SESSION["telephone"]))echo $_SESSION["telephone"];?>"maxlength="10" required>
-    <label>Adresse</label>
-    <label>Code Postal</label>
-    <input type="number" name="codePostal" value="<?php if($adresse)echo $adresse->getCodePostal();?>" required>
-    <label>Ville</label>
-    <input type="text" name="ville" value="<?php if($adresse)echo $adresse->getVille();?>" required>
-    <label>numero d'habitation</label>
-    <input type="number" name="numeroHabitation" value="<?php if($adresse)echo $adresse->getNumeroHabitation();?>" required>
-    <label>Nom de la rue</label>
-    <input type="text" name="nomRue" value="<?php if($adresse)echo $adresse->getNomRue();?>" required>
-    <label>Complément d'adresse</label>
-    <input type="text" name="complement" value="<?php if($adresse)echo $adresse->getComplement();?>">
-    <input type="submit" class=\"button\" value="Valider">
-</form>
+<body id="validationPanier">
+<div class="validation-container">
+    <div class="validation-text">Valider la commande</div>
+    <div class="validation-text-total">Montant total de la commande : <?php echo $_SESSION["prixTotal"] . "€"; ?></div>
+    <div class="validation-text-informations">Vos informations</div>
+    <form method="post" action="?controller=ControllerUtilisateur&action=finaliserPanier">
+        <div class="validation-form-row">
+            <div class="validation-input-data">
+                <input type="text" name="nom" value="<?php if(isset($_SESSION["nom"]))echo $_SESSION["nom"];?>" placeholder="Nom" required>
+            </div>
+            <div class="validation-input-data">
+                <input type="text" placeholder="Prénom" name="prenom" value="<?php if(isset($_SESSION["prenom"]))echo $_SESSION["prenom"];?>" required>
+            </div>
+        </div>
+        <div class="validation-form-row">
+            <div class="validation-input-data">
+                <input type="number" placeholder="Téléphone" name="telephone" value="<?php if(isset($_SESSION["telephone"]))echo $_SESSION["telephone"];?>"maxlength="10" required>
+            </div>
+            <div class="validation-input-data">
+                <input type="text" placeholder="Ville" name="ville" value="<?php if($adresse)echo $adresse->getVille();?>" required>
+            </div>
+        </div>
+        <div class="validation-form-row">
+            <div class="validation-input-data">
+                <input type="text" placeholder="Numéro habitation" name="numeroHabitation" value="<?php if($adresse)echo $adresse->getNumeroHabitation();?>" required>
+            </div>
+            <div class="validation-input-data">
+                <input type="text" placeholder="Nom de la rue" name="nomRue" value="<?php if($adresse)echo $adresse->getNomRue();?>" required>
+            </div>
+            <div class="validation-input-data">
+                <input type="number" placeholder="Code postal" name="codePostal" value="<?php if($adresse)echo $adresse->getCodePostal();?>" required>
+            </div>
+        </div>
 
-    <a href="?controller=ControllerUtilisateur&action=annulerPanier">Annuler la commande</a>
-</form>";
-
-
-
-
+        <div class="validation-form-row">
+            <div class="validation-input-data">
+                <input type="text" placeholder="Complément d'adresse" name="complement" value="<?php if($adresse)echo $adresse->getComplement();?>">
+                <br />
+                <div class="validation-form-row submit-btn">
+                    <div class="validation-input-data">
+                        <div class="inner1"></div>
+                        <input type="submit" value="Valider">
+                    </div>
+                    <div class="validation-input-data">
+                        <div class="inner2"></div>
+                        <input type="button" onclick="location.href='?controller=ControllerUtilisateur&action=annulerPanier'" value="Annuler">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
