@@ -46,7 +46,7 @@
 .footer .lescolonnes p { /*le texte de la section du pied de page sera gris, sans marge, de 3vh et annulera les effets appliqués par le style des pages*/
   color: #6A6363;
   margin-bottom: 10px;
-  font-size: 3vh;
+  font-size: 2em;
   font-weight: normal;
 }
 
