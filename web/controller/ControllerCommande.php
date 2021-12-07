@@ -5,6 +5,7 @@ require_once (File::build_path(array("model","Produit.php")));
 require_once (File::build_path(array("model","Adresse.php")));
 require_once (File::build_path(array("model","Commande.php")));
 require_once (File::build_path(array("model","Ligne_Commande_Produit.php")));
+require_once (File::build_path(array("controller","ControllerUtilisateur.php")));
 class ControllerCommande
 {
 
