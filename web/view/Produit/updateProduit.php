@@ -26,7 +26,7 @@
         </div>
         <div class="data-desc">
             <label>Description</label>
-            <textarea name="description" placeholder="Entrez la description du produit" rows="5"cols="65"><?php echo $produit->getDescription(); ?></textarea>
+            <textarea name="description" placeholder="Entrez la description du produit" rows="5"cols="54"><?php echo $produit->getDescription(); ?></textarea>
         </div>
         <div class="btn">
             <div class="inner"></div>
