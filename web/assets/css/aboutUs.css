@@ -1,0 +1,21 @@
+.nous{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.nous .gauche{
+    width: 45%;
+}
+
+.nous .droite{
+    width: 45%;
+}
+
+.nous h2,hr,h4{
+    text-align: center;
+}
+
+.nous p{
+    display: block;
+}
