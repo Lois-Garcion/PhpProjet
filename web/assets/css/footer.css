@@ -1,48 +1,65 @@
-.footer ul {
-  display: inline-grid;
-  grid-auto-flow: row;
-  grid-gap: 24px;
-  justify-items: center;
-  margin: auto;
-}
-
-@media (min-width: 500px) {
-  .footer ul {
-    grid-auto-flow: column;
-  }
-}
-
-.footer a {
-  color: white;
-  text-decoration: none;
-  box-shadow: inset 0 -1px 0 hsla(0, 0%, 100%, 0.4);
+.footer{
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0,0,0,0.8);
 }
 
 .footer a:hover {
   box-shadow: inset 0 -1.2em 0 hsla(0, 0%, 100%, 0.4);
 }
 
-.footer li:last-child {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-}
-
-.footer li:hover ~ li p {
+.footer li:hover {
   animation: wave-animation 0.3s infinite;
 }
 
-/* below is just for demo styling */
-
-.menu {
-  display: flex;
-  height: 20vh;
-  width: 100%;
-  background-color: #002a38;
-  line-height: 1.3;
-  font-family: Menlo, monospace;
+.footer .colonne li {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.footer,
-.push {
-  height: 50px;
+.footer .colonne {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .lescolonnes { /* la section qui comprend les 3 colonnes du pied de page*/
+  display: flex;
+  border-bottom: solid #4C4C4C; /* elle délimite la suite avec une ligne juste en dessous */
+  border-width: 0.166vh; /* cette dernière est fine*/
+  width: 85%; /* la section n'occupe pas toute la largeur pour que le pied de page reste aéré*/
+  justify-content: space-between; /* les 3 colonnes sont également réparties pour occuper toute la largeur */
+  margin: auto; /* on assure qu'après le width: 85%; le contenu ne sera pas collé à gauche, mais sera centré */
+}
+
+.footer .lescolonnes a { /*les éléments de la section qui sont des liens*/
+  color: white;
+  text-decoration: none;
+}
+
+.footer .lescolonnes .listecolonne { /* du padding sur chaque liste de la section permettra d'aérer la section*/
+  padding-right: 1.11vh;
+  padding-left: 1.11vh;
+}
+
+.footer .lescolonnes p { /*le texte de la section du pied de page sera gris, sans marge, de 3vh et annulera les effets appliqués par le style des pages*/
+  color: #6A6363;
+  margin-bottom: 0;
+  font-size: 3vh;
+  font-weight: normal;
+}
+
+.footer .dessous{ /* on pointe la section qui se trouve après le trait de la section .lescolonnes, celle qui est donc dessous */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+  margin: auto; /* les éléments sont automatiquement centrés par rapport à la place qu'ils peuvent occuper*/
+}
+
+.footer .dessous p { /*le texte de cette dernière section sera gris, de 2vh et sans effets*/
+  color: #6A6363;
+  font-size: 2vh;
+  font-weight: normal;
 }
