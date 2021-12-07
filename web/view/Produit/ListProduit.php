@@ -45,7 +45,7 @@
             echo "
                 <div class = \"product-card\">
                     <div class = \"product-image\">
-                        <img src =".$v->getFilepath().">
+                        <a href=\"?controller=ControllerProduit&action=read&id=".$v->getIdProduit()."\"> <img src =".$v->getFilepath()."> </a>
                     </div>
                     <div class = \"product-info\">
                         <h5>" . $v->getNomProduit() . "</h5>
