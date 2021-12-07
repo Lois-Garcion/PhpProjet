@@ -50,8 +50,18 @@ class ControllerUtilisateur
                 $_SESSION["telephone"] = $user->getTelephone();
                 $_SESSION["admin"] = $user->getAdmin();
                 $_SESSION["idAdresse"] = $user->getIdAdresse();
-                $_SESSION["panier"] = array();
+
+                if (isset($_SESSION["redirectionController"]) && isset($_SESSION["redirectionView"])) {
+                    $controller = $_SESSION["redirectionController"];
+                    $view = $_SESSION["redirectionView"];
+                    $pagetitle = $_SESSION["redirectionTitle"];
+                    unset($_SESSION["redirectionController"]);
+                    unset($_SESSION["redirectionView"]);
+                    unset($_SESSION["redirectionTitle"]);
+                    require_once(File::build_path(array("view","view.php")));
+                } else {
                 header("location: ./");
+            }
             } else {
                 $_SESSION["mail"] = $_POST["mail"];
                 $_SESSION["password"] = $_POST["password"];
@@ -230,15 +240,14 @@ class ControllerUtilisateur
 
     public static function ajoutPanier()
     {
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
-        }
-        else {
             $produit = Produit::getById($_POST["idProduit"]);
             if(!$produit){
                 CustomError::callError("Ce produit n'existe pas ou n'est plus en stock");
             }
             else {
+                if(!isset($_SESSION["panier"])){
+                    $_SESSION["panier"] = array();
+                }
                 if(!isset($_SESSION["panier"][$_POST["idProduit"]])) {
                     $_SESSION["panier"][$_POST["idProduit"]] = $_POST["quantite"];
                 }
@@ -248,12 +257,11 @@ class ControllerUtilisateur
                 require_once(File::build_path(array("controller", "ControllerProduit.php")));
                 ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
             }
-        }
     }
 
     public static function retirerProduitPanier(){
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        if(!isset($_SESSION["panier"][$_POST["idProduit"]])){
+            CustomError::callError("Ce produit n'est pas dans votre panier");
         }
         else {
             unset($_SESSION["panier"][$_POST["idProduit"]]);
@@ -262,8 +270,8 @@ class ControllerUtilisateur
     }
 
     public static function updateQuantity(){
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        if(!isset($_SESSION["panier"][$_POST["idProduit"]])){
+            CustomError::callError("Ce produit n'est pas dans votre panier");
         }
         else{
             if($_POST["quantite"] == 0){
@@ -278,8 +286,8 @@ class ControllerUtilisateur
     }
 
     public static function afficherPanier(){
-        if(!isset($_SESSION["status"])){
-            self::formConnect();
+        if(!isset($_SESSION["panier"])){
+            ControllerProduit::readAll();
         }
         else{
             $controller = "Utilisateur";
@@ -290,8 +298,8 @@ class ControllerUtilisateur
     }
 
     public static function annulerPanier(){
-        if(!isset($_SESSION["status"])){
-            self::formConnect();
+        if(!isset($_SESSION["panier"])){
+            ControllerProduit::readAll();
         }
         else{
             if(isset($_SESSION["prixTotal"]))unset($_SESSION["prixTotal"]);
@@ -303,6 +311,9 @@ class ControllerUtilisateur
 
     public static function validerPanier(){
         if(!isset($_SESSION["status"])){
+            $_SESSION["redirectionController"] = "Utilisateur";
+            $_SESSION["redirectionView"] = "ValidationPanier";
+            $_SESSION["redirectionTitle"] = "Validation du panier";
             self::formConnect();
         }
         else{
@@ -320,6 +331,7 @@ class ControllerUtilisateur
 
     public static function finaliserPanier(){
         if(!isset($_SESSION["status"])){
+            $_SESSION["redirection"] = "?controller=ControllerUtilisateur&action=finaliserPanier";
             self::formConnect();
         }
         else {
