@@ -99,6 +99,7 @@ class ControllerUtilisateur
     public static function inscription(){
         $controller = "Utilisateur";
         $view = "CreationCompte";
+        $pagetitle = "inscription";
         require_once(File::build_path(array("view","view.php")));
     }
 
@@ -193,6 +194,7 @@ class ControllerUtilisateur
     }
 
     public static function updateAdresse(){
+
         if (!isset($_SESSION["status"])) {
             $controller= "Utilisateur";
             $view = "Connexion";
@@ -202,12 +204,16 @@ class ControllerUtilisateur
         else{
             if(!isset($_SESSION["idAdresse"])){
                 $adresse = new Adresse(null, $_POST["codePostal"], $_POST["ville"], $_POST["numeroHabitation"], $_POST["nomRue"], $_POST["complement"], $_SESSION["mail"]);
-
             }
             else {
                 $adresse = new Adresse($_SESSION["idAdresse"], $_POST["codePostal"], $_POST["ville"], $_POST["numeroHabitation"], $_POST["nomRue"], $_POST["complement"], $_SESSION["mail"]);
             }
             $adresse->save();
+            $_SESSION["idAdresse"] = Adresse::getLastCreated()->getIdAdresse();
+
+            $user = Utilisateur::getUserByLogin($_SESSION["mail"]);
+            $user->setIdAdresse(Adresse::getLastCreated()->getIdAdresse());
+            $user->save();
 
             $controller = "Utilisateur";
             $view = "PageUtilisateur";

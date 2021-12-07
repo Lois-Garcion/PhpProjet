@@ -158,8 +158,8 @@ class Adresse
 
 
     public function save(){
-        if(is_null($this->adresseMailUtilisateur)) {
-            $sql = "INSERT INTO p_adresse (codePostal,ville,numeroHabitation,nomRue,complement,adresseMailUtilisateur) VALUES(:codePostal,:ville,:numeroHabitation,:nomRue,:complement,:adresseMailUtilisateur)";
+        if(is_null($this->idAdresse)) {
+            $sql = "INSERT INTO p_adresse (idAdresse,codePostal,ville,numeroHabitation,nomRue,complement,adresseMailUtilisateur) VALUES(null,:codePostal,:ville,:numeroHabitation,:nomRue,:complement,:adresseMailUtilisateur)";
             try {
                 $req_prep = Model::getPDO()->prepare($sql);
                 $values = array("codePostal" => $this->codePostal, "ville" => $this->ville, "numeroHabitation" => $this->numeroHabitation, "nomRue"=>$this->nomRue, "complement"=>$this->complement, "adresseMailUtilisateur"=>$this->adresseMailUtilisateur);
@@ -170,7 +170,7 @@ class Adresse
             }
         }
         else {
-            $sql = "UPDATE p_adresse SET codePostal = :codePostal, ville = :ville, numeroHabitation = :numeroHabitation, nomRue = :nomRue, complement = :complement WHERE adresseMailUtilisateur = :adresseMailUtilisateur";
+            $sql = "UPDATE p_adresse SET codePostal = :codePostal, ville = :ville, numeroHabitation = :numeroHabitation, nomRue = :nomRue, complement = :complement WHERE idAdresse = :idAdresse";
             try {
                 $req_prep = Model::getPDO()->prepare($sql);
                 $values = array(
@@ -179,7 +179,7 @@ class Adresse
                     "numeroHabitation" => $this->numeroHabitation,
                     "nomRue" => $this->nomRue,
                     "complement"=> $this->complement,
-                    "adresseMailUtilisateur"=>$this->adresseMailUtilisateur);
+                    "idAdresse"=>$this->idAdresse);
                 $req_prep->execute($values);
                 return true;
             } catch (PDOException $e) {

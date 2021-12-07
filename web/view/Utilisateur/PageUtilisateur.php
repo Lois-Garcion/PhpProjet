@@ -110,7 +110,7 @@
                     <label for="complement">
                         <strong>Complément d'adresse</strong>
                     </label>
-                    <input type="text" id="complement" placeholder="Complément d'adresse" name="complement">
+                    <input type="text" id="complement" placeholder="Complément d'adresse" name="complement" required>
                     <label for="codePostal">
                         <strong>Code postal</strong>
                     </label>
