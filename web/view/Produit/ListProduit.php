@@ -4,7 +4,7 @@
 </div>
 <section id="sidebar">
     <div class="search">
-        <form method="post" action="">
+        <form method="post" action="?controller=ControllerProduit&action=search">
             <input type = "text" name="search" placeholder="Rechercher un produit">
         </form>
     </div>
@@ -61,8 +61,9 @@
                             <div class=\"input-group\">
                                 <button type=\"submit\" name=\"submit\" class=\"submit-btn\">Ajouter</button>
                             </div>    
-                     </form>
-                </div>";
+                     </form>";
+                     if(isset($_SESSION["status"]) && $_SESSION["admin"]===1)echo"<a href=\"?controller=ControllerProduit&action=delete&id=".$v->getIdProduit()."\">Suppimer le produit</a>";
+                echo"</div>";
         }
     }
     ?>

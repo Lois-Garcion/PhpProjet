@@ -136,6 +136,26 @@ class Produit{
         }
     }
 
+    public function deleteFile(){
+        if($this->getFilepath() != null)
+            if (!unlink($this->getFilepath())){
+                CustomError::callError("Erreur lors de la suppression du fichier");
+            }
+        $this->setFilepath(null);
+    }
+
+    public function delete(){
+        $sql = "DELETE FROM p_produit WHERE idProduit = :idProduit";
+        $this->deleteFile();
+        try {
+            $req_prep = Model::getPDO()->prepare($sql);
+            $values = array("idProduit" => $this->idProduit);
+            $req_prep->execute($values);
+        } catch(PDOException $e) {
+            CustomError::callError($e->getMessage());
+        }
+    }
+
 
 
 
@@ -249,10 +269,10 @@ class Produit{
 
 
         public static function search($search){
-            $sql = "SELECT * FROM p_produit WHERE idProduit = :search OR prix = :search OR categorie = :search OR nomProduit = :search ";
+            $sql = "SELECT * FROM p_produit WHERE prix LIKE :search OR categorie LIKE :search OR nomProduit LIKE :search";
             try{
                 $req_prep = Model::getPDO()->prepare($sql);
-                $values = array("search"=>$search);
+                $values = array("search"=>"%".$search."%");
                 $req_prep->execute($values);
                 $req_prep->setFetchMode(PDO::FETCH_CLASS, 'Produit');
                 $tab_produit = $req_prep->fetchAll();
@@ -262,7 +282,6 @@ class Produit{
                 return $tab_produit;
             }
             catch (PDOException $e){
-                require_once(File::build_path(array("model","CustomeError.php")));
                 CustomError::callError($e);
             }
 
