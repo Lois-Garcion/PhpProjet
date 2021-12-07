@@ -62,7 +62,8 @@
                                 <button type=\"submit\" name=\"submit\" class=\"submit-btn\">Ajouter</button>
                             </div>    
                      </form>";
-                     if(isset($_SESSION["status"]) && $_SESSION["admin"]===1)echo"<a href=\"?controller=ControllerProduit&action=delete&id=".$v->getIdProduit()."\">Suppimer le produit</a>";
+                     if(isset($_SESSION["status"]) && $_SESSION["admin"]===1)echo"<a href=\"?controller=ControllerProduit&action=delete&id=".$v->getIdProduit()."\">Suppimer le produit</a><br>";
+            if(isset($_SESSION["status"]) && $_SESSION["admin"]===1)echo"<a href=\"?controller=ControllerProduit&action=formUpdate&id=".$v->getIdProduit()."\">Modifier le produit</a>";
                 echo"</div>";
         }
     }
