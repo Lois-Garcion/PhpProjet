@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="assets/css/finCommande.css" type="text/css">
         <link rel="stylesheet" href="assets/css/pageProduit.css" type="text/css">
         <link rel="stylesheet" href="assets/css/accueilAdmin.css" type="text/css">
+        <link rel="stylesheet" href="assets/css/aboutUs.css" type="text/css">
     </head>
     <body>
 
@@ -28,6 +29,7 @@
         <div class="menu">
           <ul>
             <li><a href="./">Accueil</a></li>
+              <li><a href=./?controller=ControllerUtilisateur&action=aboutUs>About us</a></li>
               <?php if(!isset($_SESSION["status"])){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
               }

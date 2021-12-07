@@ -133,6 +133,7 @@ class ControllerUtilisateur
         if($_SESSION["admin"]=1){
             $controller = "Utilisateur";
             $view = "AccueilAdmin";
+            $pagetitle = "Accueil Administrateur";
             require_once(File::build_path(array("view","view.php")));
         }
         else{
@@ -376,16 +377,13 @@ class ControllerUtilisateur
             $view = "FinCommande";
             $pagetitle = "Merci de votre Commande";
             require_once(File::build_path(array("view","view.php")));
-
-
-
-
-
-
-
         }
+    }
 
-
-
+    public static function aboutUs(){
+        $controller = null;
+        $view = "Nous";
+        $pagetitle = "About us";
+        require_once(File::build_path(array("view","view.php")));
     }
 }
