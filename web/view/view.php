@@ -64,30 +64,57 @@
           ?>
           <div class="push"></div>
       </div>
-        <footer class="footer">
-          <div class="menu">
-            <ul>
-              <li><a href="./">Accueil</a></li>
-                <?php if(!isset($_SESSION["status"])){
-                        echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
-                }
-                else{
-                    if($_SESSION["admin"]==1){
-                        echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
-                    }
-                    echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
-                    echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
-                }
-                if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){
-                    echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
-                }
-                ?>
+      <footer class="footer">
 
-              <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
+          <div class="lescolonnes">
+              <div class="colonne">
+                  <ul class="listecolonne">
+                      <li><p>Redirection</p></li>
+                      <li><a href="./">Accueil</a></li>
+                      <li><a href=./?controller=ControllerUtilisateur&action=aboutUs>About us</a></li>
+                      <?php if(!isset($_SESSION["status"])){
+                          echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
+                      }
+                      else{
+                          if($_SESSION["admin"]==1){
+                              echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
+                          }
+                          echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
+                          echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
+                          echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
+                      }
+                      if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){
+                          echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
+                      }
+                      ?>
+                      <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
+                  </ul>
+              </div>
 
-            </ul>
+              <div class="colonne">
+                  <ul class="listecolonne">
+                      <li><p>L'équipe</p></li>
+                      <li><a>Kellian Puginier</a></li>
+                      <li><a>Florian Cam</a></li>
+                      <li><a>Loïs Garcion</a></li>
+                  </ul>
+              </div>
+
+              <div class="colonne">
+                  <ul class="listecolonne">
+                      <li><p>Remerciements</p></li>
+                      <li><a>Cyrille Nadal</a></li>
+                      <li><a>Le poulpe de Git</a></li>
+                      <li><a>Optimum Prime</a></li>
+                  </ul>
+              </div>
+
           </div>
-        </footer>
+
+          <div class="dessous">
+              <p>Copyright © 2021 BoutiqueDeLaCaillé Corp. All rights reserved.</p>
+          </div>
+      </footer>
 
     </body>
 </html>
