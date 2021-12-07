@@ -1,7 +1,3 @@
-
-<?php //TODO METTRE TOUTES LES INFOS D'UN UTILISATEUR (en gros son nom, son prenom, son telephone, ...)?>
-
-
 <div class="connect-container">
     <div class="text">
         Inscription

@@ -111,21 +111,21 @@ class ControllerUtilisateur
             $confirmPassword = $_POST["validationPassword"];
 
             if ($password !== $confirmPassword) {
-                CustomError::callError("les mots de passe ne coincident pas"); //TODO ajouter un message d'erreur au dessus du form d'inscription
+                CustomError::callError("les mots de passe ne coincident pas");
             } else if (Utilisateur::getUserByLogin($mail)) {
-                CustomError::callError("cette adresse mail existe deja"); //TODO ajouter un message d'erreur au dessus du form d'inscription
+                CustomError::callError("cette adresse mail existe deja");
             } else {
                 $nonce = Security::generateRandomHex();
                 $v = new Utilisateur($mail, Security::hacher($password),$nonce);
                 $v->save();
-                $mail = "Le code pour vous connecter est le suivant : ".$nonce."\n"; //TODO ajouter un lien vers la page de connexion
+                $mail = "Le code pour vous connecter est le suivant : ".$nonce."\n";
                 mail($v->getAdresseMail(),"Boutique de la calle, validez votre inscription",$mail);
                 ControllerUtilisateur::formConnect();
 
             }
         }
         else{
-            CustomError::callError("l'adresse mail n'est pas valide"); //TODO ajouter un message d'erreur au dessus du form d'inscription
+            CustomError::callError("l'adresse mail n'est pas valide");
         }
     }
 
@@ -256,7 +256,7 @@ class ControllerUtilisateur
                     $_SESSION["panier"][$_POST["idProduit"]] = $_SESSION["panier"][$_POST["idProduit"]] + $_POST["quantite"];
                 }
                 require_once(File::build_path(array("controller", "ControllerProduit.php")));
-                ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
+                ControllerProduit::readAll();
             }
     }
 

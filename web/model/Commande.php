@@ -178,7 +178,7 @@ class Commande
         }
     }
 
-    public static function getAllByMail($mail){ //TODO y'a un probleme je comprend pas
+    public static function getAllByMail($mail){
         $sql = "SELECT * FROM p_commande WHERE adresseMailUtilisateur = :adresseMail";
         try {
             $req_prep = Model::getPDO()->prepare($sql);
