@@ -27,8 +27,8 @@
         <div class="menu">
           <ul>
             <li><a href="./">Accueil</a></li>
-              <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
               <li><a href=./?controller=ControllerUtilisateur&action=aboutUs>About us</a></li>
+              <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
               <?php if(!isset($_SESSION["status"])){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
               }
