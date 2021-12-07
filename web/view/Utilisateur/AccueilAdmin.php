@@ -4,7 +4,7 @@
 
 <form method="post" action="?controller=ControllerUtilisateur&action=upgradeAdmin">
     <label>Adresse mail</label>
-    <input type="text" name="mail" placeholder="Entre le mail de la personne à passer admin">
+    <input type="email" name="mail" placeholder="Entre le mail de la personne à passer admin">
     <input type="submit" class="button" value="Valider">
 </form>
     <div class = "formulaire">
