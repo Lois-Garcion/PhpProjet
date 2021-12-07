@@ -33,6 +33,10 @@
                     </select>
                 </div>
                 <div class="input-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="8" cols="50">Entrez la description du produit</textarea>
+                </div>
+                <div class="input-group">
                     <label>Image</label>
                     <input type = "file" name="file" required>
                 </div>

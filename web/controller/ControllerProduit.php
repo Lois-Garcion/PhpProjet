@@ -71,7 +71,7 @@ class ControllerProduit
 
     public static function read(){
         require_once(File::build_path(array("model","Produit.php")));
-        $produit = Produit::getById($_GET("id"));
+        $produit = Produit::getById($_GET["id"]);
 
         $controller = "Produit";
         $view = "PageProduit";
@@ -118,7 +118,7 @@ class ControllerProduit
                     CustomError::callError("Ce type de fichier n'est pas autorisée");
                 }
 
-                $produit = new Produit(null, $_POST["prix"], $_POST["categorie"], $_POST["nomProduit"], $fileDestination);
+                $produit = new Produit(null, $_POST["prix"], $_POST["categorie"], $_POST["nomProduit"],$_POST["description"], $fileDestination);
 
                 $produit->save();
                 ControllerUtilisateur::accueilAdmin();
@@ -141,12 +141,5 @@ class ControllerProduit
         else{
             CustomError::callError("vous n'avez pas le droit d'effectuer cette action");
         }
-    }
-
-    public static function formProduit(){
-        $controller= "Produit";
-        $view = "formProduit";
-        $pagetitle = "Formulaire";
-        require_once(File::build_path(array("view","view.php")));
     }
 }
