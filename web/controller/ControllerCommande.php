@@ -10,7 +10,7 @@ class ControllerCommande
 
     public static function readByIdCommande(){
         if(!isset($_SESSION["status"])){
-            self::formConnect();
+            ControllerUtilisateur::formConnect();
         }
         else {
             require_once(File::build_path(array("model", "Ligne_Commande_Produit.php")));
@@ -26,7 +26,7 @@ class ControllerCommande
 
     public static function readAll(){
         if(!isset($_SESSION["status"])){
-            self::formConnect();
+            ControllerUtilisateur::formConnect();
         }
         else {
             $tabCommande = Commande::getAllByMail($_SESSION["mail"]);
@@ -40,7 +40,7 @@ class ControllerCommande
 
     public static function read(){
         if(!isset($_SESSION["status"])){
-            self::formConnect();
+            ControllerUtilisateur::formConnect();
         }
         else {
             $tab_ligneCP = Ligne_Commande_Produit::getAllByIdCommande($_GET["id"]);
