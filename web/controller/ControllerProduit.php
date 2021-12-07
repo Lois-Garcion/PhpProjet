@@ -81,7 +81,7 @@ class ControllerProduit
     }
 
     public static function created(){
-        if($_SESSION["admin"]=1) {
+        if($_SESSION["admin"]==1) {
             require_once(File::build_path(array("model", "Produit.php")));
             if (isset($_POST['submit'])) {
 
@@ -132,10 +132,42 @@ class ControllerProduit
     }
 
     public static function delete(){
-        if($_SESSION["admin"]=1) {
+        if($_SESSION["admin"]==1) {
             $produit = Produit::getById($_GET["id"]);
             $produit->deleteFile();
             $produit->delete();
+            self::readAll();
+        }
+        else{
+            CustomError::callError("vous n'avez pas le droit d'effectuer cette action");
+        }
+    }
+
+    public static function formUpdate(){
+        if($_SESSION["admin"]==1){
+            $controller = "Produit";
+            $view = "updateProduit";
+            $pagetitle = "modifier le produit";
+
+            require_once(File::build_path(array("view","view.php")));
+        }
+        else{
+            ControllerUtilisateur::formConnect();
+        }
+    }
+
+    public static function update(){
+        if($_SESSION["admin"]==1) {
+            if(!isset($_GET["id"])){
+                CustomError::callError("Erreur lors de l'update, il n'y a pas d'id dans le GET");
+            }
+            $ancienProduit = Produit::getById($_GET["id"]);
+            if(!$ancienProduit){
+                CustomError::callError("Le produit avec l'id : ".$_GET["id"]."n'existe pas");
+            }
+            $produit = new Produit($_GET["id"],$_POST["prix"],$_POST["categorie"],$_POST["nomProduit"],$_POST["description"],$ancienProduit->getFilePath());
+            $produit->save();
+
             self::readAll();
         }
         else{
