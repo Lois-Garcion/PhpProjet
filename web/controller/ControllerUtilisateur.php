@@ -181,6 +181,30 @@ class ControllerUtilisateur
         }
     }
 
+    public static function updateAdresse(){
+        if (!isset($_SESSION["status"])) {
+            $controller= "Utilisateur";
+            $view = "Connexion";
+            $pagetitle = "Connexion";
+            require_once(File::build_path(array("view","view.php")));
+        }
+        else{
+            if(!isset($_SESSION["idAdresse"])){
+                $adresse = new Adresse(null, $_POST["codePostal"], $_POST["ville"], $_POST["numeroHabitation"], $_POST["nomRue"], $_POST["complement"], $_SESSION["mail"]);
+
+            }
+            else {
+                $adresse = new Adresse($_SESSION["idAdresse"], $_POST["codePostal"], $_POST["ville"], $_POST["numeroHabitation"], $_POST["nomRue"], $_POST["complement"], $_SESSION["mail"]);
+            }
+            $adresse->save();
+
+            $controller = "Utilisateur";
+            $view = "PageUtilisateur";
+            $pagetitle = "Utilisateur de la calle";
+            require_once(File::build_path(array("view","view.php")));
+        }
+    }
+
     public static function updatePhone(){
         if (!isset($_SESSION["status"])) {
           $controller= "Utilisateur";

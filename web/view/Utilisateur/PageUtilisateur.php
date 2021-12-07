@@ -1,3 +1,4 @@
+<?php $adresse = Adresse::getById($_SESSION["idAdresse"])?>
 <h1>Mon profil</h1>
 <hr />
 
@@ -82,15 +83,15 @@
         <ul class="listInfos">
             <li class="infoTitle"><p>Mon adresse:</p></li>
             <li class="infoTitle"><p>Numero logement: </p></li>
-            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNumeroHabitation();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="info"><p style="border: 1px solid"><?php if($adresse){echo $adresse->getNumeroHabitation();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
             <li class="infoTitle"><p>Intitulé rue: </p></li>
-            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getNomRue();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="info"><p style="border: 1px solid"><?php if($adresse){echo $adresse->getNomRue();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
             <li class="infoTitle"><p>Complément d'adresse: </p></li>
-            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getComplement();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="info"><p style="border: 1px solid"><?php if($adresse){echo $adresse->getComplement();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
             <li class="infoTitle"><p>Code postal: </p></li>
-            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getCodePostal();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="info"><p style="border: 1px solid"><?php if($adresse){echo $adresse->getCodePostal();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
             <li class="infoTitle"><p>Ville: </p></li>
-            <li class="info"><p style="border: 1px solid"><?php if(!is_null($adresse)){echo $adresse->getVille();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
+            <li class="info"><p style="border: 1px solid"><?php if($adresse){echo $adresse->getVille();} else {echo "Vous n'avez pas renseigné cet élément !";}?></p></li>
             <li class="open-btn"><button class="open-button" onclick="openForm3()"><strong>Modifier mon adresse ou ses informations</strong></button></li>
         </div>
         
@@ -109,7 +110,7 @@
                     <label for="complement">
                         <strong>Complément d'adresse</strong>
                     </label>
-                    <input type="text" id="complement" placeholder="Complément d'adresse" name="complement" required>
+                    <input type="text" id="complement" placeholder="Complément d'adresse" name="complement">
                     <label for="codePostal">
                         <strong>Code postal</strong>
                     </label>
