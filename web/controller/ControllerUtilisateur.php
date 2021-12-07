@@ -50,7 +50,6 @@ class ControllerUtilisateur
                 $_SESSION["telephone"] = $user->getTelephone();
                 $_SESSION["admin"] = $user->getAdmin();
                 $_SESSION["idAdresse"] = $user->getIdAdresse();
-                $_SESSION["panier"] = array();
                 header("location: ./");
             } else {
                 $_SESSION["mail"] = $_POST["mail"];
@@ -230,15 +229,14 @@ class ControllerUtilisateur
 
     public static function ajoutPanier()
     {
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
-        }
-        else {
             $produit = Produit::getById($_POST["idProduit"]);
             if(!$produit){
                 CustomError::callError("Ce produit n'existe pas ou n'est plus en stock");
             }
             else {
+                if(!isset($_SESSION["panier"])){
+                    $_SESSION["panier"] = array();
+                }
                 if(!isset($_SESSION["panier"][$_POST["idProduit"]])) {
                     $_SESSION["panier"][$_POST["idProduit"]] = $_POST["quantite"];
                 }
@@ -248,12 +246,11 @@ class ControllerUtilisateur
                 require_once(File::build_path(array("controller", "ControllerProduit.php")));
                 ControllerProduit::readAll(); //TODO grace aux sessions, revenir sur la page sur laquelle l'utilisateur etait lors de l'ajout
             }
-        }
     }
 
     public static function retirerProduitPanier(){
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        if(isset($_SESSION["panier"][$_POST["idProduit"]])){
+            CustomError::callError("Ce produit n'est pas dans votre panier");
         }
         else {
             unset($_SESSION["panier"][$_POST["idProduit"]]);
@@ -262,8 +259,8 @@ class ControllerUtilisateur
     }
 
     public static function updateQuantity(){
-        if (!isset($_SESSION["status"])) {
-            self::formConnect(); //TODO ramener l'utilisateur ou il était après sa connexion
+        if(isset($_SESSION["panier"][$_POST["idProduit"]])){
+            CustomError::callError("Ce produit n'est pas dans votre panier");
         }
         else{
             if($_POST["quantite"] == 0){
@@ -278,8 +275,8 @@ class ControllerUtilisateur
     }
 
     public static function afficherPanier(){
-        if(!isset($_SESSION["status"])){
-            self::formConnect();
+        if(!isset($_SESSION["panier"])){
+            ControllerProduit::readAll();
         }
         else{
             $controller = "Utilisateur";
@@ -290,8 +287,8 @@ class ControllerUtilisateur
     }
 
     public static function annulerPanier(){
-        if(!isset($_SESSION["status"])){
-            self::formConnect();
+        if(!isset($_SESSION["panier"])){
+            ControllerProduit::readAll();
         }
         else{
             if(isset($_SESSION["prixTotal"]))unset($_SESSION["prixTotal"]);
