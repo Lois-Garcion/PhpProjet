@@ -22,32 +22,28 @@
     </head>
     <body>
 
-
-
       <header class="header">
 
         <div class="menu">
           <ul>
             <li><a href="./">Accueil</a></li>
+              <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
               <li><a href=./?controller=ControllerUtilisateur&action=aboutUs>About us</a></li>
               <?php if(!isset($_SESSION["status"])){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=formConnect".">Se connecter</a></li>";
               }
               else{
+                  echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
+                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
                   if($_SESSION["admin"]==1){
                       echo "<li><a href="."./?controller=ControllerUtilisateur&action=accueilAdmin".">Admin</a></li>";
                   }
-                  echo "<li><a href="."./?controller=ControllerUtilisateur&action=pageUtilisateur".">Mon profil</a></li>";
-                  echo"<li><a href=\"?controller=ControllerCommande&action=readAll\">Mes commandes</a></li>";
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=logout".">Se deconnecter</a></li>";
               }
               if(isset($_SESSION["panier"]) && !empty($_SESSION["panier"])){
                   echo "<li><a href="."./?controller=ControllerUtilisateur&action=afficherPanier".">Panier</a></li>";
               }
               ?>
-
-            <li><a href="./?controller=ControllerProduit&action=readAll">Les produits</a></li>
-
           </ul>
         </div>
 
